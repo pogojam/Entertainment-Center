@@ -1,10 +1,11 @@
-FROM balenalib/asus-tinker-board-alpine-node
-WORKDIR ./ 
-COPY package.json package.json
+FROM balenalib/asus-tinker-board-s-alpine-node
+WORKDIR ./app
+COPY package.json ./ 
+COPY yarn.lock ./
 RUN yarn  
-RUN yarn add -G serve
+ENV PATH /app/node_modules/.bin:$PATH
+RUN npm install -g react-script
 ENV API_HOST=http://localhost
-ENV REACT_APP_STRIPE_KEY=pk_test_CFWtG6ajKXWCe31wnZRpW4bK00lV9TwQ2H
 COPY . .
 
-CMD ["npm","run","production"]
+CMD ["yarn","start"]

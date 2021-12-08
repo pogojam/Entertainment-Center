@@ -1,5 +1,11 @@
 version: "2"
 services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
   server:
     build: ./server
     privileged: true
@@ -7,8 +13,8 @@ services:
       - "5000"
     ports:
       - "5000:5000"
-    env_file:
-      - ./server/.env
+    # env_file:
+    #   - ./server/.env
     devices:
       - "/dev/sda1:/temp/"
   frontend:
@@ -19,5 +25,5 @@ services:
       - server
     ports:
       - "3000:3000"
-    env_file:
-      - ./frontend/.env
+    # env_file:
+    #   - ./branch/.env
