@@ -8,14 +8,14 @@ export const NavBar = () => {
 
   return (
     <Fragment>
-      <Nav align="center" direction="row" background="brand" pad="medium">
+      {/* <Nav align="center" direction="row" background="brand" pad="medium">
         <Anchor onClick={() => navigate("/")} icon={<Icons.Home />} />
         <Button
           onClick={() => navigate("/Login")}
           margin={{ left: "auto" }}
           label="Login"
         />
-      </Nav>
+      </Nav> */}
       <Outlet />
     </Fragment>
   );
