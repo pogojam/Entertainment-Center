@@ -127,38 +127,34 @@ export const Scene1 = () => {
   const strokeAnim = useSpring(showStroke ? { offset: 0 } : { offset: 300 });
 
   return (
-    <StyledSceneContainer>
-      {/* <StyledSceneCaption
-        windowHeight={windowHeight}
+    <StyledSceneCaption
+      style={{
+        opacity: anims[2].opacity.to((e) => e),
+      }}
+    >
+      <StyledSceneHeading
         style={{
-          opacity: anims[2].opacity.to((e) => e),
+          transform: anims[2].x.to(
+            (x, y, r) => `translate(${x}px,${y}px) rotate3d(0,0,1,${r}deg)`
+          ),
         }}
       >
-        <StyledSceneHeading
-          style={{
-            transform: anims[2].x.to(
-              (x, y, r) => `translate(${x}px,${y}px) rotate3d(0,0,1,${r}deg)`
-            ),
-          }}
-        >
-          <span>Ryan</span>
-          <span> Breaux</span>
-        </StyledSceneHeading>
-        <animated.div
-          className={"Scene1-SubCaption"}
-          style={{
-            display: "flex",
-            opacity: anims[2].opacity.to((e) => e),
-            transform: anims[3].x.to((x, y, r) => {
-              return `translate(${x}px,${y}px) rotate3d(0,0,1,${r}deg)`;
-            }),
-          }}
-        >
-          <FaBlackTie size="3.7em" style={{ color: "black" }} type="tie" />
-          <p>Building digital products</p>
-          <p>Tempe AZ In Tempe Arizona.</p>
-        </animated.div>
-      </StyledSceneCaption> */}
-    </StyledSceneContainer>
+        <span>Ryan</span>
+        <span> Breaux</span>
+      </StyledSceneHeading>
+      <animated.div
+        className={"Scene1-SubCaption"}
+        style={{
+          display: "flex",
+          transform: anims[3].x.to((x, y, r) => {
+            return `translate(${x}px,${y}px) rotate3d(0,0,1,${r}deg)`;
+          }),
+        }}
+      >
+        <FaBlackTie size="3.7em" style={{ color: "black" }} type="tie" />
+        <p>Building digital products</p>
+        <p>Tempe AZ In Tempe Arizona.</p>
+      </animated.div>
+    </StyledSceneCaption>
   );
 };

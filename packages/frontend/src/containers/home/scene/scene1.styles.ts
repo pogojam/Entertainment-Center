@@ -3,14 +3,6 @@ import styled from "styled-components";
 
 export const StyledSceneContainer = styled.div`
   color: black;
-  height: 110vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
 
   p {
     font-weight: 700;
@@ -24,18 +16,13 @@ export const StyledSceneContainer = styled.div`
   }
 `;
 
-export const StyledSceneCaption = styled(animated.div) <{
-  windowHeight: number;
+interface ISceneCaption {
   opacity?: string;
-}>`
+}
+export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
   color: black;
-  position: absolute;
   top: 0;
   left: 15vw;
-  height: ${({ windowHeight }) => windowHeight * 0.9 + "px"};
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   opacity: ${({ opacity }) => opacity};
   width: 68%;
   z-index: 99;

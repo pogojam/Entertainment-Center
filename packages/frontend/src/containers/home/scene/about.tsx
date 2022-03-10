@@ -1,19 +1,11 @@
-import _ from "lodash";
-import Icon from "../../../icons";
+import { useLoader } from "@react-three/fiber";
 import chance from "chance";
-import { useObserver, buildThresholdList, useToggle } from "../../../util";
-import { useSpring, animated, config, useSprings } from "react-spring";
+import React, { useEffect, useState } from "react";
+import { animated, config, useSpring, useSprings } from "react-spring";
 import styled from "styled-components";
-import React, {
-  useEffect,
-  useContext,
-  useState,
-  useReducer,
-  useRef,
-  useCallback,
-} from "react";
-import { PageState_Context } from "./context";
-import { useScroll, useWheel } from "react-use-gesture";
+import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";
+import Icon from "../../../icons";
+import { buildThresholdList, useObserver, useToggle } from "../../../util";
 
 const AboutStyles = styled.div`
   position: absolute;
@@ -58,6 +50,11 @@ const TechIcons = React.memo(({ show }) => {
     "mongo",
     "terminal",
   ];
+
+  // const iconMap = useLoader(
+  //   SVGLoader,
+  //   ReactDomServer.renderToString(<Icon size="5em" type={iconList[0]} />)
+  // );
 
   const colors = [
     "#85DCBE",
@@ -115,74 +112,24 @@ const TechIcons = React.memo(({ show }) => {
 });
 
 export const About = () => {
-  const [ref, entries] = useObserver({ threshold: buildThresholdList(40) });
-  const [show, toggle] = useToggle(false);
-
-  const [windowHeight, setWindowHeight] = useState(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setWindowHeight(window.innerHeight);
-    }
-  }, []);
-
-  // const [store, dispatch] = useContext(PageState_Context)
-
-  const { transform, opacity } = useSpring(
-    show
-      ? {
-          transform: `translate(0,0px)`,
-          opacity: 1,
-        }
-      : {
-          transform: `translate(0,300px)`,
-          opacity: 0,
-          config: config.molasses,
-        }
-  );
-
-  useEffect(() => {
-    const ir = entries.intersectionRatio;
-    if (entries.intersectionRatio) {
-      if (ir > 0.6 && !show) {
-        toggle();
-      }
-      if (ir < 0.4 && show) {
-        toggle();
-      } else {
-      }
-    }
-  }, [entries]);
-
-  useEffect(() => {
-    // if (show && store.active !== "about") {
-    //   dispatch({ type: "SET_ACTIVE", input: "about" })
-    // }
-  }, [show]);
-
   return (
-    <AboutStyles windowHeight={windowHeight} ref={ref}>
-      <animated.div
-        style={{
-          opacity,
-          transform,
-          position: "relative",
-        }}
-      >
-        <TechIcons show={show} />
-        <Line index={1} show={show} />
+    <animated.div
+      style={{
+        position: "relative",
+      }}
+    >
+      <TechIcons show={true} />
+      <Line index={1} show={true} />
 
-        <animated.p>
-          Big on design and lightning fast code. Found my love for JS developing
-          on Node , leveraging the power of Non-Blocking I/O and npm’s rich
-          package eco system. Out of necessity I first started learning web
-          development in college when I started my first business selling
-          clothing online through an e-commerce website. I have since learned
-          more advanced techniques building tools for lead generation and
-          business productivity.
-        </animated.p>
-        <Line index={2} show={show} />
-      </animated.div>
-    </AboutStyles>
+      <animated.p>
+        Big on design and lightning fast code. Found my love for JS developing
+        on Node , leveraging the power of Non-Blocking I/O and npm’s rich
+        package eco system. Out of necessity I first started learning web
+        development in college when I started my first business selling clothing
+        online through an e-commerce website. I have since learned more advanced
+        techniques building tools for lead generation and business productivity.
+      </animated.p>
+      <Line index={2} show={true} />
+    </animated.div>
   );
 };
