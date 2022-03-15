@@ -60,7 +60,7 @@ const SetupCanvas = ({ children }) => {
       id="Background_Canvas"
       shadows
       dpr={[1, 2]}
-      camera={{ position: [0, -3.2, 40], fov: 12 }}
+      camera={{ position: [0, 3.2, 40], fov: 12 }}
     >
       <ScrollControls
         pages={8} // Each page takes 100% of the height of the canvas

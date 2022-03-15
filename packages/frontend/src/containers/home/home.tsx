@@ -22,7 +22,7 @@ function HomeContainer() {
         <Scroll>
           <StarGroup />
           <WarpedPlane />
-          <Planet />
+          {/* <Planet /> */}
         </Scroll>
         <Scroll html>
           <PageManager>
