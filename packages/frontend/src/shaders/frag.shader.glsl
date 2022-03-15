@@ -20,9 +20,11 @@ mat2 Rotate(float a) {
 }
 
 float Gyroid(vec3 p) {
-  float compression = cos(time * .02) * 10.2;
+  float compression = cos(time * .01) * 10.2;
   p *= compression;
-  return abs(.7 * dot(sin(p), cos(p.yxx)) / compression) - .02;
+  p.xz *= Rotate(time * .01);
+
+  return abs(.7 * dot(sin(p), cos(p.yzx)) / compression) - .02;
 }
 
 float smin(float a, float b, float k) {
@@ -35,13 +37,18 @@ float GetDist(vec3 p) {
 
   float sphereDist = length(p - s.xyz) - s.w;
 
-  sphereDist = abs(sphereDist) - .03;
-  sphereDist = smin(sphereDist, Gyroid(p), -.01);
+  float hollowSphere = abs(sphereDist) - .03;
 
-  // float planeDist = p.y;
+  sphereDist = smin(hollowSphere, Gyroid(p), -.01);
 
-  // float d = min(sphereDist, planeDist);
-  return sphereDist;
+  float plane =
+      dot(p, normalize(vec3(mouse.x, mouse.y, sin(mouse.x * mouse.y))));
+  plane = abs(plane) - .1;
+
+  float orbitSphere = max(plane, hollowSphere - .8);
+
+  float d = min(sphereDist, orbitSphere);
+  return d;
 }
 
 float RayMarch(vec3 ro, vec3 rd) {
@@ -91,8 +98,8 @@ void main() {
   vec3 rd = normalize(vec3(uv.x, uv.y, 1));
 
   // ro.yz *= Rotate(time * 1.3);
-  ro.xz *= Rotate(time);
-  // ro.y = max(ro.y, -.9);
+  // ro.xz *= Rotate(time) * 1.2;
+  // o.y = max(ro.y, -.9);
 
   float d = RayMarch(ro, rd);
 
