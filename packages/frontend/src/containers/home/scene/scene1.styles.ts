@@ -27,6 +27,23 @@ export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
   width: 68%;
   z-index: 99;
   will-change:  opacity;
+  height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1em;
+  h2{
+    font-size: 10vw;
+    letter-spacing: 4px;
+    .Name-1{
+      /* padding-left: 20px;
+    margin-top: -40px; */
+    color: #ff0835;
+
+    }
+
+  }
+
 `;
 
 export const StyledSceneHeading = styled(animated.h2)`

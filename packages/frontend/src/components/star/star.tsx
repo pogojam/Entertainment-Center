@@ -18,7 +18,7 @@ export const StarGroup = () => {
       if (showStars) {
         canvasNode.style.backgroundColor = "rgba(0, 0, 0, .95)";
       } else {
-        canvasNode.style.backgroundColor = "rgba(0, 0, 0, 0)";
+        canvasNode.style.backgroundColor = "rgba(0, 0, 0, .0)";
       }
     }
   }, [showStars]);

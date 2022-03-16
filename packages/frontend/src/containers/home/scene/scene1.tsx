@@ -139,10 +139,10 @@ export const Scene1 = () => {
           ),
         }}
       >
-        <span>Ryan</span>
-        <span> Breaux</span>
+        <h1 className="Name-2">Ryan</h1>
+        <h1 className="Name-1"> Breaux</h1>
       </StyledSceneHeading>
-      <animated.div
+      {/* <animated.div
         className={"Scene1-SubCaption"}
         style={{
           display: "flex",
@@ -154,7 +154,7 @@ export const Scene1 = () => {
         <FaBlackTie size="3.7em" style={{ color: "black" }} type="tie" />
         <p>Building digital products</p>
         <p>Tempe AZ In Tempe Arizona.</p>
-      </animated.div>
+      </animated.div> */}
     </StyledSceneCaption>
   );
 };
