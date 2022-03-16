@@ -50,10 +50,10 @@ float GetDist(vec3 p) {
 
   float sphereDistGyroid = smin(hollowSphere, Gyroid(p), -.01);
   float sphereDistGyroidBackground =
-      smin(hollowSphereBackground, Gyroid(p), -.01);
+      smin(hollowSphereBackground, Gyroid(p), -.08);
 
-  // sphereDist = min(sphereDistGyroid, sphereDistGyroidBackground);
-  sphereDist = sphereDistGyroid;
+  sphereDist = min(sphereDistGyroid, sphereDistGyroidBackground);
+  // sphereDist = sphereDistGyroid;
 
   // float plane =
   //     dot(p, normalize(vec3(Rotate(sin(time))) * vec3(.5, .5, mouse.y *
@@ -67,7 +67,7 @@ float GetDist(vec3 p) {
   float d = sphereDist;
 
   vec4 ms = vec4(mouse.x * 2.3, (mouse.y + .3) * 2.3, 6, .4);
-  float mouseSphere = length(p - ms.xyz) - ms.w;
+  float mouseSphere = MakeSphere(p, ms);
   d = smin(d, mouseSphere, .9);
 
   return d;
@@ -139,6 +139,7 @@ void main() {
 
   col.xyz = pow(col.xyz, vec3(.4545)); // gamma correction
 
+  // col = texture(planeTexture, rd.xy) * col;
   // col = .03 * GetColor(2. * length(p));
 
   gl_FragColor = col;

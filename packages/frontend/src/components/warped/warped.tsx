@@ -80,7 +80,7 @@ export const WarpedPlane = memo(() => {
       height: { value: 0 },
       width: { value: 0 },
       mouse: { type: "v2v", value: new Vector2(0, 0) },
-      planeTexture: { value: img },
+      planeTexture: { type: "t", value: img },
       hasTexture: { value: 1 },
       scale: { value: 0 },
       shift: { value: 0 },

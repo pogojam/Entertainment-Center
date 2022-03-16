@@ -35,10 +35,15 @@ export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
   h2{
     font-size: 10vw;
     letter-spacing: 4px;
+    text-transform: uppercase;
+
+    text-shadow: 1px 7px 0px #a8a3ed;
+
     .Name-1{
       /* padding-left: 20px;
     margin-top: -40px; */
-    color: #ff0835;
+    color: #000000;
+    text-shadow: 1px 7px 0px #e80000;
 
     }
 
