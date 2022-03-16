@@ -23,38 +23,37 @@ export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
   color: black;
   top: 0;
   left: 15vw;
+  justify-content: center;
   opacity: ${({ opacity }) => opacity};
-  width: 68%;
   z-index: 99;
   will-change:  opacity;
   height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     padding: 1em;
-  h2{
+
+`;
+
+export const StyledSceneHeading = styled(animated.div)`
+  font-size: 7vw;
+  line-height: 0.8em;
+    display: flex;
+    gap: 0.4em;
+    justify-content: center;
+
+    color: #4752a9;
+  h1{
     font-size: 10vw;
     letter-spacing: 4px;
     text-transform: uppercase;
 
-    text-shadow: 1px 7px 0px #a8a3ed;
+    text-shadow: 1px 7px 13px #a8a3ed;
+  }
 
     .Name-1{
-      /* padding-left: 20px;
-    margin-top: -40px; */
-    color: #000000;
-    text-shadow: 1px 7px 0px #e80000;
+    text-shadow: 1px 7px 13px #e80000;
 
     }
 
-  }
 
-`;
-
-export const StyledSceneHeading = styled(animated.h2)`
-  will-change: transform, opacity;
-  font-size: 7vw;
-  line-height: 0.8em;
-  text-align: left;
-  padding-bottom: 2px;
 `;

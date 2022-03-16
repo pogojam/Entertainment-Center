@@ -4,7 +4,7 @@ import {
   ScrollControls,
 } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
-import React, { useMemo, useRef } from "react";
+import React, { Suspense, useMemo, useRef } from "react";
 import styled from "styled-components";
 import { DoubleSide } from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";

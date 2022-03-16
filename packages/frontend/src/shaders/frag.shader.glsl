@@ -123,6 +123,7 @@ void main() {
   vec4 col = vec4(0.);
 
   vec3 ro = vec3(0, 1, 0);
+
   vec3 rd = normalize(vec3(uv.x, uv.y, 1));
 
   // ro.yz *= Rotate(time * 1.3);

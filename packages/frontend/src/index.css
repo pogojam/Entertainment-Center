@@ -8,13 +8,16 @@
 
 @font-face {
   font-family: "agory";
-  src: url("./fonts/Agory.ttf") format("ttf"),
-    url("./fonts/Agory.otf") format("opentype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+  src: url("./fonts/Agory.ttf"), url("./fonts/Agory.otf") format("opentype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+@font-face {
+  font-family: "break";
+  src: url("./fonts/Break_Font/break light.ttf");
 }
 h1,
 h2,
 h3 {
-  font-family: "agory", sans-serif;
+  font-family: "break", sans-serif;
 }
 html,
 body,
