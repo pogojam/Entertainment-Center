@@ -20,7 +20,8 @@ const AnimatedPlane = animated(Plane);
 export const WarpedPlane = memo(() => {
   const scroll = useScroll();
   const planeRef = useRef();
-  const [isOutOfWindow, setIsoutOfwindow] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [unlockMouse, setUnlockMouse] = useState(false);
   const img = useTexture(
     "https://res.cloudinary.com/dxjse9tsv/image/upload/v1589865954/01.jpg"
   );
@@ -33,11 +34,45 @@ export const WarpedPlane = memo(() => {
     rotation: initPlaneRotation,
     position: initPlanePosition,
     intensity: 0.0,
-    mouse: [0, 0],
+    mouse: [0, 1],
     config: config.molasses,
   });
 
-  useLayoutEffect(async () => {
+  useLayoutEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  useFrame((e) => {
+    if (unlockMouse) {
+      mouse.start([e.mouse.x, e.mouse.y]);
+    }
+
+    if (planeRef.current) {
+      // planeRef.current.position.y = yVal;
+      // planeRef.current.position.z = zVal;
+      // planeRef.current.material.uniforms.crossAxis.value = e.mouse.x;
+      planeRef.current.material.uniforms.time.value = e.clock.elapsedTime;
+      planeRef.current.material.uniforms.width.value = window.innerWidth;
+      planeRef.current.material.uniforms.height.value = window.innerHeight;
+    }
+  });
+
+  // Has Mounted Effect.
+  useEffect(async () => {
+    mouse.start([0, 0], {
+      config: {
+        mass: 3,
+        friction: 3,
+        velocity: 0,
+        tension: 2,
+      },
+      onStart(elapsedTime) {
+        setTimeout(() => {
+          setUnlockMouse(true);
+        }, 1900);
+      },
+    });
+
     await intensity.start(1.3, {
       config: {
         velocity: 0,
@@ -54,24 +89,7 @@ export const WarpedPlane = memo(() => {
         friction: 15,
       },
     });
-  }, []);
-
-  useFrame((e) => {
-    if (!isOutOfWindow) {
-      mouse.start([e.mouse.x, e.mouse.y]);
-    } else {
-      mouse.start([0, 0]);
-    }
-
-    if (planeRef.current) {
-      // planeRef.current.position.y = yVal;
-      // planeRef.current.position.z = zVal;
-      // planeRef.current.material.uniforms.crossAxis.value = e.mouse.x;
-      planeRef.current.material.uniforms.time.value = e.clock.elapsedTime;
-      planeRef.current.material.uniforms.width.value = window.innerWidth;
-      planeRef.current.material.uniforms.height.value = window.innerHeight;
-    }
-  });
+  }, [hasMounted]);
 
   const uniforms = useMemo(
     () => ({

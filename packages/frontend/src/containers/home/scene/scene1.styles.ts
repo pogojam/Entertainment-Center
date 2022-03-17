@@ -20,6 +20,7 @@ interface ISceneCaption {
   opacity?: string;
 }
 export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
+    align-items: center;
   color: black;
   top: 0;
   left: 15vw;
@@ -32,6 +33,13 @@ export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
     flex-direction: column;
     padding: 1em;
 
+    p{
+      font-size: 24px;
+    font-weight: bolder;
+    color: black;
+    text-shadow: rgb(172 128 128) -1.08454px -0.67567px 14px;
+    }
+
 `;
 
 export const StyledSceneHeading = styled(animated.div)`
@@ -41,17 +49,15 @@ export const StyledSceneHeading = styled(animated.div)`
     gap: 0.4em;
     justify-content: center;
 
+
     color: #4752a9;
   h1{
     letter-spacing: 4px;
     text-transform: uppercase;
-
-    text-shadow: 1px 7px 13px #a8a3ed;
+    /* text-shadow: 1px 7px 13px #a8a3ed; */
   }
-
     .Name-1{
-    text-shadow: 1px 7px 13px #e80000;
-
+    /* text-shadow: 1px 7px 13px #e80000; */
     }
 
   @media screen and (max-width: 700px){

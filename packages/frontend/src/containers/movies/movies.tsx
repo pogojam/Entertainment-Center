@@ -8,8 +8,6 @@ import {
   StyledMovieSelectionPane,
 } from "./movies.styles";
 
-console.log(await getMovie("the matrix"));
-
 const MockMovies = [
   {
     title: "The Matrix",

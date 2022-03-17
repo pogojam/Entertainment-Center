@@ -17,8 +17,8 @@ ReactDOM.render(
           <Routes>
             <Route path="/" element={<NavBar />}>
               <Route path="/" element={<HomeContainer />} />
-              <Route path="/Login" element={<Login />} />
-              <Route path="/Movies" element={<MoviesContainer />} />
+              {/* <Route path="/Login" element={<Login />} />
+              <Route path="/Movies" element={<MoviesContainer />} /> */}
             </Route>
           </Routes>
         </BrowserRouter>

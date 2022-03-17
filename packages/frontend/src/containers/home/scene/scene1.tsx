@@ -1,25 +1,19 @@
-import {
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-  useLayoutEffect,
-} from "react";
-import _ from "lodash";
-import {
-  useTransition,
-  animated,
-  useSpring,
-  useSprings,
-  config,
-} from "react-spring";
+import { useEffect } from "react";
+import { animated, useSpring, config } from "react-spring";
 import { StyledSceneCaption, StyledSceneHeading } from "./scene1.styles";
+import { useFrame } from "@react-three/fiber";
 
 export const Scene1 = () => {
-  const { opacity } = useSpring({
+  const { opacity, header } = useSpring({
     opacity: 0,
+    header: [0.3, 0.3, 1],
   });
 
+  useFrame((e) => {
+    header.start([e.mouse.x * -0.5, e.mouse.y], {
+      config: config.stiff,
+    });
+  });
   useEffect(() => {
     opacity.start(1);
   }, []);
@@ -27,22 +21,37 @@ export const Scene1 = () => {
   return (
     <StyledSceneCaption>
       <StyledSceneHeading style={{ opacity }}>
-        <h1 className="Name-2">Ryan</h1>
-        <h1 className="Name-1"> Breaux</h1>
+        <animated.h1
+          style={{
+            textShadow: header.to(
+              (x, y) => `${x * 13}px ${y * 13}px ${2}px #a8a3ed`
+            ),
+            transform: header.to((v, p, s) => `scale(${s})`),
+          }}
+          className="Name-2"
+        >
+          Ryan
+        </animated.h1>
+        <animated.h1
+          style={{
+            textShadow: header.to(
+              (x, y) => `${x * 13}px ${y * 13}px ${2}px #a8a3ed`
+            ),
+            transform: header.to((v, p, s) => `scale(${s})`),
+          }}
+          className="Name-1"
+        >
+          Breaux
+        </animated.h1>
       </StyledSceneHeading>
-      {/* <animated.div
+      <animated.div
         className={"Scene1-SubCaption"}
         style={{
           display: "flex",
-          transform: anims[3].x.to((x, y, r) => {
-            return `translate(${x}px,${y}px) rotate3d(0,0,1,${r}deg)`;
-          }),
         }}
       >
-        <FaBlackTie size="3.7em" style={{ color: "black" }} type="tie" />
-        <p>Building digital products</p>
-        <p>Tempe AZ In Tempe Arizona.</p>
-      </animated.div> */}
+        <p>Building digital products in Phoenix AZ.</p>
+      </animated.div>
     </StyledSceneCaption>
   );
 };

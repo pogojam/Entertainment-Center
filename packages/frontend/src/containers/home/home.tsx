@@ -28,9 +28,9 @@ function HomeContainer() {
             <Page index={0}>
               <Scene1 />
             </Page>
-            <Page index={1}>
+            {/* <Page index={1}>
               <About />
-            </Page>
+            </Page> */}
           </PageManager>
         </Scroll>
       </Background>
