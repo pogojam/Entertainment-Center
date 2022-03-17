@@ -43,7 +43,6 @@ export const StyledSceneHeading = styled(animated.div)`
 
     color: #4752a9;
   h1{
-    font-size: 10vw;
     letter-spacing: 4px;
     text-transform: uppercase;
 
@@ -55,5 +54,8 @@ export const StyledSceneHeading = styled(animated.div)`
 
     }
 
+  @media screen and (max-width: 700px){
+      font-size: 20px;
+  }
 
 `;

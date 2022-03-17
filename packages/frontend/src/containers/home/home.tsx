@@ -20,7 +20,6 @@ function HomeContainer() {
     <StyledHomeContainer>
       <Background>
         <Scroll>
-          <StarGroup />
           <WarpedPlane />
           {/* <Planet /> */}
         </Scroll>

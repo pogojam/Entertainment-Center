@@ -18,7 +18,7 @@ const StyledBackground = styled.div`
   height: 100%;
 
   #Background_Canvas {
-    background-color: #00000053;
+    background-color: white;
     transition: background-color 0.8s linear;
   }
 `;

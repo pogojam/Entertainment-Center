@@ -18,7 +18,6 @@ import { StyledSceneCaption, StyledSceneHeading } from "./scene1.styles";
 export const Scene1 = () => {
   const { opacity } = useSpring({
     opacity: 0,
-    config: config.molasses,
   });
 
   useEffect(() => {

@@ -11,6 +11,7 @@ uniform vec3 color;
 uniform float opacity;
 varying vec2 vUv;
 uniform float time;
+uniform float intensity;
 uniform vec2 mouse;
 
 mat2 Rotate(float a) {
@@ -20,7 +21,8 @@ mat2 Rotate(float a) {
 }
 
 float Gyroid(vec3 p) {
-  float compression = cos(time * .01) * 3.2;
+  // float compression = cos(time * .01) * 3.2;
+  float compression = cos(time * .01) * intensity;
   p *= compression;
   p.xz *= Rotate(time * .01);
 
