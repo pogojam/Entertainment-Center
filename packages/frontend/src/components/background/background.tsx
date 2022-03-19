@@ -9,6 +9,13 @@ import styled from "styled-components";
 import { DoubleSide } from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";
 import "../../materials/customMaterial";
+import {
+  EffectComposer,
+  DepthOfField,
+  Bloom,
+  Noise,
+  Vignette,
+} from "@react-three/postprocessing";
 
 const StyledBackground = styled.div`
   .background_html_scroll {
@@ -52,6 +59,22 @@ const About = () => {
   );
 };
 
+const PostEffects = () => {
+  return (
+    <EffectComposer>
+      <DepthOfField
+        focusDistance={0}
+        focalLength={0.02}
+        bokehScale={2}
+        height={480}
+      />
+      <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
+      <Noise opacity={0.02} />
+      <Vignette eskil={false} offset={0.1} darkness={1.1} />
+    </EffectComposer>
+  );
+};
+
 const SetupCanvas = ({ children }) => {
   const cameraRef = useRef(null);
 
@@ -62,6 +85,7 @@ const SetupCanvas = ({ children }) => {
       dpr={[1, 2]}
       camera={{ position: [0, 3.2, 40], fov: 12 }}
     >
+      <PostEffects />
       <ScrollControls
         pages={0} // Each page takes 100% of the height of the canvas
         distance={1} // A factor that increases scroll bar travel (default: 1)

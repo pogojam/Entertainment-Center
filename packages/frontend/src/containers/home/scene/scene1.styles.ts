@@ -50,7 +50,6 @@ export const StyledSceneHeading = styled(animated.div)`
     justify-content: center;
 
 
-    color: #4752a9;
   h1{
     letter-spacing: 4px;
     text-transform: uppercase;

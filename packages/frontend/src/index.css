@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Slab|Julius+Sans+One|Monoton|Poiret+One|Gruppo&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Heebo:900&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Poiret+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,6 +10,10 @@
 @font-face {
   font-family: "agory";
   src: url("./fonts/Agory.ttf"), url("./fonts/Agory.otf") format("opentype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+@font-face {
+  font-family: "break/regular";
+  src: url("./fonts/Break_Font/break\ regular.ttf");
 }
 @font-face {
   font-family: "break";
