@@ -1,7 +1,9 @@
 import {
+  Html,
   OrbitControls,
   PerspectiveCamera,
   ScrollControls,
+  useProgress,
 } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import React, { Suspense, useMemo, useRef } from "react";
@@ -21,11 +23,12 @@ const StyledBackground = styled.div`
   .background_html_scroll {
     will-change: transform;
     width: 100%;
+    position: relative;
   }
   height: 100%;
 
   #Background_Canvas {
-    background-color: white;
+    background-color: #d42323;
     transition: background-color 0.8s linear;
   }
 `;
@@ -68,36 +71,53 @@ const PostEffects = () => {
         bokehScale={2}
         height={480}
       />
-      <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
-      <Noise opacity={0.02} />
-      <Vignette eskil={false} offset={0.1} darkness={1.1} />
+      {/* <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
+      <Noise opacity={0.4} /> */}
+      <Vignette eskil={false} offset={0.1} darkness={0.8} />
     </EffectComposer>
   );
 };
-
+function Loader() {
+  const { active, progress, errors, item, loaded, total } = useProgress();
+  return <Html center>{progress} % loaded</Html>;
+}
+const GlassOverLay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #13141454;
+  z-index: 9;
+  backdrop-filter: blur(9px);
+  pointer-events: none;
+`;
 const SetupCanvas = ({ children }) => {
   const cameraRef = useRef(null);
 
   return (
-    <Canvas
-      id="Background_Canvas"
-      shadows
-      dpr={[1, 2]}
-      camera={{ position: [0, 3.2, 40], fov: 12 }}
-    >
-      <PostEffects />
-      <ScrollControls
-        pages={0} // Each page takes 100% of the height of the canvas
-        distance={1} // A factor that increases scroll bar travel (default: 1)
-        damping={4} // Friction, higher is faster (default: 4)
-        horizontal={false} // Can also scroll horizontally (default: false)
-        infinite={false} // Can also scroll infinitely (default: false)
+    <>
+      {/* <GlassOverLay /> */}
+      <Canvas
+        id="Background_Canvas"
+        shadows
+        dpr={[1, 2]}
+        camera={{ position: [0, 3.2, 40], fov: 12 }}
       >
-        {/* <OrbitControls enableZoom={true} /> */}
-        <PerspectiveCamera ref={cameraRef} />
-        {children}
-      </ScrollControls>
-    </Canvas>
+        <Suspense fallback={Loader}>
+          {/* <PostEffects /> */}
+          <ScrollControls
+            pages={0} // Each page takes 100% of the height of the canvas
+            distance={1} // A factor that increases scroll bar travel (default: 1)
+            damping={4} // Friction, higher is faster (default: 4)
+            horizontal={false} // Can also scroll horizontally (default: false)
+            infinite={false} // Can also scroll infinitely (default: false)
+          >
+            {/* <OrbitControls enableZoom={true} /> */}
+            <PerspectiveCamera ref={cameraRef} />
+            {children}
+          </ScrollControls>
+        </Suspense>
+      </Canvas>
+    </>
   );
 };
 

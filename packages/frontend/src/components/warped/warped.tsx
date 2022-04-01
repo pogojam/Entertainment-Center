@@ -18,7 +18,6 @@ import vertex from "../../shaders/vertex.shader.glsl?raw";
 const AnimatedPlane = animated(Plane);
 
 export const WarpedPlane = memo(() => {
-  const scroll = useScroll();
   const planeRef = useRef();
   const [hasMounted, setHasMounted] = useState(false);
   const [unlockMouse, setUnlockMouse] = useState(false);
@@ -26,7 +25,7 @@ export const WarpedPlane = memo(() => {
     "https://res.cloudinary.com/dxjse9tsv/image/upload/v1589865954/01.jpg"
   );
 
-  const initPlaneSize = [15, 15, 100, 100];
+  const initPlaneSize = [20, 20, 100, 100];
   const initPlanePosition = [0, 0, 0];
   const initPlaneRotation = [0, 0, 0];
 

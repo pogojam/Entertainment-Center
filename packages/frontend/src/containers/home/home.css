@@ -40,3 +40,9 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+#root {
+  background-color: black;
+  padding-bottom: 6%;
+  padding-top: 6%;
+}

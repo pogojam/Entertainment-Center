@@ -22,7 +22,8 @@ mat2 Rotate(float a) {
 
 float Gyroid(vec3 p) {
   // float compression = cos(time * .01) * 3.2;
-  float compression = cos(time * .01) * intensity;
+  float compression = mix(0.0, .5, cos(time * .01) * intensity);
+  // float compression = mix(.8, 1.1, sin(time * .1) * (intensity));
   p *= compression;
   p.xz *= Rotate(time * .01);
 
@@ -45,7 +46,7 @@ float MakeSphere(vec3 p, vec4 s) { return length(p - s.xyz) - s.w; }
 float GetDist(vec3 p) {
 
   float sphereDist = MakeSphere(p, vec4(0, 1, 6, 1));
-  float sphereBackgroundDist = MakeSphere(p, vec4(0, 1, 6, 3));
+  float sphereBackgroundDist = MakeSphere(p, vec4(0, 1, 6, 3.5));
 
   float hollowSphere = abs(sphereDist) - .03;
   float hollowSphereBackground = abs(sphereBackgroundDist) - .03;
@@ -67,8 +68,8 @@ float GetDist(vec3 p) {
 
   // float d = min(sphereDist, orbitSphere);
   float d = sphereDist;
-
-  vec4 ms = vec4(mouse.x * 2.3, (mouse.y + .3) * 2.3, 6, .4);
+  float mouseDelta = 2.8;
+  vec4 ms = vec4(mouse.x * mouseDelta, (mouse.y + .3) * mouseDelta, 6, .4);
   float mouseSphere = MakeSphere(p, ms);
   d = smin(d, mouseSphere, .9);
 
@@ -120,11 +121,11 @@ vec4 GetLight(vec3 p) {
 void main() {
   vec2 iResolution = vec2(1, 1);
   vec2 uv = (vUv - .5 * iResolution.xy) / iResolution.y;
-
-  uv = vec2(uv.x + (mouse.x * .01), uv.y + (mouse.y * .01));
+  float mouseDelta = .03;
+  uv = vec2(uv.x + (mouse.x * mouseDelta), uv.y + (mouse.y * mouseDelta));
   vec4 col = vec4(0.);
 
-  vec3 ro = vec3(0, 1, 0);
+  vec3 ro = vec3(0, 1, -2);
 
   vec3 rd = normalize(vec3(uv.x, uv.y, 1));
 
@@ -140,7 +141,7 @@ void main() {
     col = dif;
   }
 
-  col.xyz = pow(col.xyz, vec3(.4545)); // gamma correction
+  col.xyz = pow(col.xyz, vec3(.9545)); // gamma correction
 
   // col = texture(planeTexture, rd.xy) * col;
   // col = .03 * GetColor(2. * length(p));

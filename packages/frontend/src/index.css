@@ -11,10 +11,10 @@
   font-family: "agory";
   src: url("./fonts/Agory.ttf"), url("./fonts/Agory.otf") format("opentype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
-@font-face {
+/* @font-face {
   font-family: "break/regular";
   src: url("./fonts/Break_Font/break\ regular.ttf");
-}
+} */
 @font-face {
   font-family: "break";
   src: url("./fonts/Break_Font/break light.ttf");

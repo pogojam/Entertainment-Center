@@ -24,6 +24,7 @@ specifiers:
   react: ^17.0.2
   react-dom: ^17.0.2
   react-icons: ^4.3.1
+  react-loader-spinner: ^6.0.0-0
   react-router: ^6.2.1
   react-router-dom: ^6.2.1
   react-spring: ^9.4.2
@@ -53,6 +54,7 @@ dependencies:
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-icons: 4.3.1_react@17.0.2
+  react-loader-spinner: 6.0.0-0_react-dom@17.0.2+react@17.0.2
   react-router: 6.2.1_react@17.0.2
   react-router-dom: 6.2.1_react-dom@17.0.2+react@17.0.2
   react-spring: 9.4.2_c9e634a955d90ce13d891a0762661dad
@@ -1991,6 +1993,14 @@ packages:
       react-is: 16.13.1
     dev: false
 
+  /prop-types/15.8.1:
+    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+    dev: false
+
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
@@ -2030,6 +2040,24 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  /react-loader-spinner/6.0.0-0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-ANUS2nWUNALH933d04IY3iT6aIYuizI6mQpzHjH5i4aKdnLhm68JLICd2CKdOgxCNixM5iKqA8QSNWBdKe4++g==}
+    engines: {npm: please-use-yarn, yarn: '>= 1.19.1'}
+    peerDependencies:
+      react: ^17.0.2
+      react-dom: ^17.0.2
+    dependencies:
+      '@babel/runtime': 7.16.7
+      prop-types: 15.8.1
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      styled-components: 5.3.3_react-dom@17.0.2+react@17.0.2
+      styled-tools: 1.7.2
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - react-is
+    dev: false
 
   /react-merge-refs/1.1.0:
     resolution: {integrity: sha512-alTKsjEL0dKH/ru1Iyn7vliS2QRcBp9zZPGoWxUOvRGWPUYgjo+V01is7p04It6KhgrzhJGnIj9GgX8W4bZoCQ==}
@@ -2288,6 +2316,10 @@ packages:
       object-assign: 4.1.1
     dev: false
 
+  /styled-tools/1.7.2:
+    resolution: {integrity: sha512-IjLxzM20RMwAsx8M1QoRlCG/Kmq8lKzCGyospjtSXt/BTIIcvgTonaxQAsKnBrsZNwhpHzO9ADx5te0h76ILVg==}
+    dev: false
+
   /supports-color/5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
@@ -2417,6 +2449,10 @@ packages:
 
   /troika-worker-utils/0.45.0:
     resolution: {integrity: sha512-pEO8u7+29dG5SbmGUg0wqXPEe+r+Hd0ibKf75tjH2aoR7ZPlRwUzRTvPURDlDNFF4KysDLvMCdHnyslG9IG5Hw==}
+    dev: false
+
+  /tslib/2.3.1:
+    resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: false
 
   /typescript/4.5.4:

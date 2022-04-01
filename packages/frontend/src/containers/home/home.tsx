@@ -1,5 +1,7 @@
 import { Scroll } from "@react-three/drei";
 import { useEffect, useLayoutEffect } from "react";
+import { Outlet, Route, Routes, useLocation } from "react-router";
+import { useTransition, config } from "react-spring";
 import styled from "styled-components";
 import { Background } from "../../components/background/background";
 import Planet from "../../components/background/Planet";
@@ -16,24 +18,27 @@ const StyledHomeContainer = styled.div`
 `;
 
 function HomeContainer() {
+  const location = useLocation();
+  const transitions = useTransition(location, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    delay: 200,
+    config: config.molasses,
+  });
   return (
     <StyledHomeContainer>
       <Background>
-        <Scroll>
-          <WarpedPlane />
-          {/* <Planet /> */}
-        </Scroll>
-        <Scroll html>
-          <PageManager>
-            <Page index={0}>
-              <Scene1 />
-            </Page>
-            {/* <Page index={1}>
-              <About />
-            </Page> */}
-          </PageManager>
-        </Scroll>
+        <WarpedPlane />
       </Background>
+      <PageManager>
+        {transitions((props, items) => (
+          <Routes location={items}>
+            <Route index element={<Scene1 style={props} />} />
+            <Route path="About" element={<About />} />
+          </Routes>
+        ))}
+      </PageManager>
     </StyledHomeContainer>
   );
 }

@@ -5,25 +5,33 @@ import HomeContainer from "./containers/home/home";
 import { NavBar } from "./components/nav";
 import { Grommet } from "grommet";
 import theme from "./theme";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Login from "./containers/login/login";
 import { MoviesContainer } from "./containers/movies/movies";
+import { Page } from "./components/page/page";
+import { Scene1 } from "./containers/home/scene/scene1";
+import { About } from "./containers/home/scene/about";
+import { config, useTransition } from "react-spring";
+
+const AppRoutes = () => {
+  return (
+    <Grommet style={{ height: "100%" }} theme={theme}>
+      <Routes>
+        <Route path="/*" element={<NavBar />}>
+          <Route path="*" element={<HomeContainer />} />
+          {/* <Route path="/Login" element={<Login />} />
+              <Route path="/Movies" element={<MoviesContainer />} /> */}
+        </Route>
+      </Routes>
+    </Grommet>
+  );
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <Grommet style={{ height: "100%" }} theme={theme}>
-      <Suspense fallback={null}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<NavBar />}>
-              <Route path="/" element={<HomeContainer />} />
-              {/* <Route path="/Login" element={<Login />} />
-              <Route path="/Movies" element={<MoviesContainer />} /> */}
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Suspense>
-    </Grommet>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

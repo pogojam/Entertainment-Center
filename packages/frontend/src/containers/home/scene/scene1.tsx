@@ -3,8 +3,9 @@ import { animated, useSpring, config } from "react-spring";
 import { StyledSceneCaption, StyledSceneHeading } from "./scene1.styles";
 import { useFrame } from "@react-three/fiber";
 import { NavState } from "../../../components/nav";
+import { Page } from "../../../components/page/page";
 
-export const Scene1 = () => {
+export const Scene1 = ({ style }) => {
   const { opacity, header } = useSpring({
     opacity: 0,
     header: [0.3, 0.3, 1],
@@ -18,11 +19,14 @@ export const Scene1 = () => {
   const setNavPos = (observer) => {
     const [{ target }] = observer;
     const { top, height } = target.getBoundingClientRect();
+    const shift = top + height;
 
-    NavState.setTopPos(top + height);
+    NavState.setTopPos(shift > 0 ? shift : window.innerHeight * 0.55);
+    NavState.setTopPos(shift > 0 ? shift : window.innerHeight * 0.55);
   };
   useLayoutEffect(() => {
-    opacity.start(1);
+    opacity.start(1, { config: { duration: 2000 } });
+    NavState.setShouldShow(true);
     const observer = new ResizeObserver(setNavPos);
     if (conRef.current) {
       observer.observe(conRef.current);
@@ -33,32 +37,37 @@ export const Scene1 = () => {
   }, []);
 
   return (
-    <StyledSceneCaption>
-      <StyledSceneHeading ref={conRef} style={{ opacity }}>
-        <animated.h1
-          // style={{
-          //   textShadow: header.to(
-          //     (x, y) => `${x * 13}px ${y * 13}px ${2}px #a8a3ed`
-          //   ),
-          //   transform: header.to((v, p, s) => `scale(${s})`),
-          // }}
-          className="Name-2"
+    <Page index={0}>
+      <StyledSceneCaption>
+        <StyledSceneHeading
+          id={"HomeContainer-Heading"}
+          ref={conRef}
+          style={{ opacity: style.opacity }}
         >
-          Ryan
-        </animated.h1>
-        <animated.h1
-          // style={{
-          //   textShadow: header.to(
-          //     (x, y) => `${x * 13}px ${y * 13}px ${2}px #a8a3ed`
-          //   ),
-          //   transform: header.to((v, p, s) => `scale(${s})`),
-          // }}
-          className="Name-1"
-        >
-          Breaux
-        </animated.h1>
-      </StyledSceneHeading>
-      {/* <animated.div
+          <animated.h1
+            // style={{
+            //   textShadow: header.to(
+            //     (x, y) => `${x * 13}px ${y * 13}px ${2}px #a8a3ed`
+            //   ),
+            //   transform: header.to((v, p, s) => `scale(${s})`),
+            // }}
+            className="Name-2"
+          >
+            Ryan Breaux
+          </animated.h1>
+          {/* <animated.h1
+            // style={{
+            //   textShadow: header.to(
+            //     (x, y) => `${x * 13}px ${y * 13}px ${2}px #a8a3ed`
+            //   ),
+            //   transform: header.to((v, p, s) => `scale(${s})`),
+            // }}
+            className="Name-1"
+          >
+            Breaux
+          </animated.h1> */}
+        </StyledSceneHeading>
+        {/* <animated.div
         className={"Scene1-SubCaption"}
         style={{
           display: "flex",
@@ -66,6 +75,7 @@ export const Scene1 = () => {
       >
         <p>Building digital products in Phoenix AZ.</p>
       </animated.div> */}
-    </StyledSceneCaption>
+      </StyledSceneCaption>
+    </Page>
   );
 };

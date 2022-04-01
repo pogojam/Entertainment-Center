@@ -18,7 +18,9 @@ const StyledPage = styled.div<pageProps>`
 `;
 
 const StyledPageManager = styled.div`
-  position: relative;
+  pointer-events: none;
+
+  /* position: relative; */
 `;
 
 export const PageManager = ({ children }) => {

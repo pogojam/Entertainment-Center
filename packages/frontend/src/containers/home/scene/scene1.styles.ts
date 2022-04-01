@@ -51,7 +51,7 @@ export const StyledSceneHeading = styled(animated.div)`
 
 
   h1{
-    letter-spacing: 4px;
+    letter-spacing: 42px;
     text-transform: uppercase;
     /* text-shadow: 1px 7px 13px #a8a3ed; */
   }
