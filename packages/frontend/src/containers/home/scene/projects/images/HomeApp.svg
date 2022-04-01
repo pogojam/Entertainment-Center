@@ -1,0 +1,9 @@
+<svg width="63" height="77" xmlns="http://www.w3.org/2000/svg">
+  <g id="Page-1" fill="none" fill-rule="evenodd">
+    <g id="HomeApp" fill="#694FD3">
+      <path d="M35.035 74H35V63h-9v11h-.035a3.5 3.5 0 0 1-6.93 0H19V63H5a5 5 0 0 1-5-5V5a5 5 0 0 1 5-5h53a5 5 0 0 1 5 5v53a5 5 0 0 1-5 5H42v11h-.035a3.5 3.5 0 0 1-6.93 0zM12 8a4 4 0 0 0-4 4v40a4 4 0 0 0 4 4h40a4 4 0 0 0 4-4V12a4 4 0 0 0-4-4H12z" id="Combined-Shape"/>
+      <circle id="Oval-Copy-2" cx="35.5" cy="19.5" r="3.5"/>
+      <circle id="Oval-Copy-3" cx="47.5" cy="19.5" r="3.5"/>
+    </g>
+  </g>
+</svg>

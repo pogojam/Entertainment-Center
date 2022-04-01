@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Raleway:300&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Josefin+Slab|Julius+Sans+One|Monoton|Poiret+One|Gruppo&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Heebo:900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Poiret+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "agory";
+  src: url("./fonts/Agory.ttf"), url("./fonts/Agory.otf") format("opentype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+/* @font-face {
+  font-family: "break/regular";
+  src: url("./fonts/Break_Font/break\ regular.ttf");
+} */
+@font-face {
+  font-family: "break";
+  src: url("./fonts/Break_Font/break light.ttf");
+}
+h1,
+h2,
+h3,
+p {
+  font-family: "break", sans-serif;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

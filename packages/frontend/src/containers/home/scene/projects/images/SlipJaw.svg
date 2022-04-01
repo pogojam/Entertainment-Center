@@ -1,0 +1,15 @@
+<svg width="68" height="62" xmlns="http://www.w3.org/2000/svg">
+  <g id="Page-1" fill="none" fill-rule="evenodd">
+    <g id="SlipJaw">
+      <rect id="Rectangle" fill="#F50505" width="68" height="62" rx="3"/>
+      <path id="Triangle-Copy-2" fill="#DCCACA" d="M33.5 44L40 57H27z"/>
+      <path id="Triangle-Copy-4" fill="#DCCACA" transform="matrix(1 0 0 -1 0 66.795)" d="M34.398 26.898l6.5 13h-13z"/>
+      <path id="Triangle-Copy" fill="#DCCACA" transform="rotate(-21 47 48)" d="M47 42l6 12H41z"/>
+      <path id="Triangle-Copy-5" fill="#DCCACA" transform="scale(1 -1) rotate(-21 -134.25 0)" d="M46.5 28L52 39H41z"/>
+      <path id="Triangle-Copy-3" fill="#DCCACA" transform="scale(-1 1) rotate(-21 0 163.504)" d="M21.5 42L27 53H16z"/>
+      <path id="Triangle-Copy-6" fill="#DCCACA" transform="rotate(159 21.535 33.336)" d="M21.535 28.336l5 10h-10z"/>
+      <rect id="Rectangle" fill="#000" x="19" y="10" width="7" height="5" rx="2.5"/>
+      <rect id="Rectangle-Copy-3" fill="#000" x="42" y="6" width="7" height="10" rx="3"/>
+    </g>
+  </g>
+</svg>

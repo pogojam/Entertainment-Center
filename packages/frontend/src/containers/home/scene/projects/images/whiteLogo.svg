@@ -1,0 +1,14 @@
+<svg width="62" height="63" xmlns="http://www.w3.org/2000/svg">
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="PoiretOne-Regular, Poiret One" font-size="83" font-weight="normal">
+    <g id="Desktop-HD" transform="translate(-689 -480)" fill="#FFF">
+      <g id="Group" transform="translate(686 463)">
+        <text id="R-Copy">
+          <tspan x="33" y="80">R</tspan>
+        </text>
+        <text id="B-Copy" transform="matrix(-1 0 0 1 33 0)">
+          <tspan x="0" y="80">B</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
