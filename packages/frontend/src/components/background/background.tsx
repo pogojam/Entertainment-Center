@@ -6,7 +6,7 @@ import {
   useProgress,
 } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
-import React, { Suspense, useMemo, useRef } from "react";
+import React, { Suspense, useEffect, useMemo, useRef } from "react";
 import styled from "styled-components";
 import { DoubleSide } from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";
@@ -18,6 +18,23 @@ import {
   Noise,
   Vignette,
 } from "@react-three/postprocessing";
+import { makeAutoObservable } from "mobx";
+import { Meter } from "grommet";
+import { config, useTransition } from "@react-spring/three";
+import { animated } from "react-spring";
+
+class State {
+  hasLoaded = false;
+
+  constructor() {
+    makeAutoObservable(this);
+  }
+  setLoadState(state) {
+    this.hasLoaded = state;
+  }
+}
+
+export const BackgroundState = new State();
 
 const StyledBackground = styled.div`
   .background_html_scroll {
@@ -32,6 +49,43 @@ const StyledBackground = styled.div`
     transition: background-color 0.8s linear;
   }
 `;
+
+const StyledLoader = styled(animated.div)`
+  width: 36vw;
+  padding-bottom: 7px;
+  font-family: "break";
+  font-weight: 900;
+  letter-spacing: 5px;
+`;
+
+function Loader({ progress, style }) {
+  useEffect(() => {
+    return () => {
+      setTimeout(() => {
+        BackgroundState.setLoadState(true);
+      }, 800);
+    };
+  }, []);
+  return (
+    <Html center>
+      <StyledLoader style={style}>
+        Loading
+        <Meter
+          color="black"
+          thickness="xsmall"
+          size="xlarge"
+          values={[
+            {
+              value: progress,
+              label: "sixty",
+            },
+          ]}
+          aria-label="meter"
+        ></Meter>
+      </StyledLoader>
+    </Html>
+  );
+}
 
 const About = () => {
   const data = useLoader(
@@ -62,25 +116,6 @@ const About = () => {
   );
 };
 
-const PostEffects = () => {
-  return (
-    <EffectComposer>
-      <DepthOfField
-        focusDistance={0}
-        focalLength={0.02}
-        bokehScale={2}
-        height={480}
-      />
-      {/* <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
-      <Noise opacity={0.4} /> */}
-      <Vignette eskil={false} offset={0.1} darkness={0.8} />
-    </EffectComposer>
-  );
-};
-function Loader() {
-  const { active, progress, errors, item, loaded, total } = useProgress();
-  return <Html center>{progress} % loaded</Html>;
-}
 const GlassOverLay = styled.div`
   position: absolute;
   width: 100%;
@@ -90,9 +125,18 @@ const GlassOverLay = styled.div`
   backdrop-filter: blur(9px);
   pointer-events: none;
 `;
+
 const SetupCanvas = ({ children }) => {
   const cameraRef = useRef(null);
+  const { active, progress, loaded } = useProgress();
 
+  const transitions = useTransition(progress, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    delay: 200,
+    config: config.molasses,
+  });
   return (
     <>
       {/* <GlassOverLay /> */}
@@ -102,8 +146,11 @@ const SetupCanvas = ({ children }) => {
         dpr={[1, 2]}
         camera={{ position: [0, 3.2, 40], fov: 12 }}
       >
-        <Suspense fallback={Loader}>
-          {/* <PostEffects /> */}
+        {transitions(
+          (props, items) =>
+            progress !== 100 && <Loader style={props} progress={progress} />
+        )}
+        <Suspense fallback={<></>}>
           <ScrollControls
             pages={0} // Each page takes 100% of the height of the canvas
             distance={1} // A factor that increases scroll bar travel (default: 1)
@@ -111,7 +158,6 @@ const SetupCanvas = ({ children }) => {
             horizontal={false} // Can also scroll horizontally (default: false)
             infinite={false} // Can also scroll infinitely (default: false)
           >
-            {/* <OrbitControls enableZoom={true} /> */}
             <PerspectiveCamera ref={cameraRef} />
             {children}
           </ScrollControls>

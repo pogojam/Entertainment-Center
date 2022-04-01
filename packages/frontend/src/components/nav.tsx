@@ -3,7 +3,7 @@ import { Anchor, Button, Nav } from "grommet";
 import * as Icons from "grommet-icons";
 import { makeAutoObservable } from "mobx";
 import { observer } from "mobx-react";
-import { Fragment, useEffect, useLayoutEffect } from "react";
+import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
@@ -44,8 +44,12 @@ const StyledNav = styled(animated.nav)`
     display: flex;
     justify-content: center;
     border-top: 1px solid;
-    border-bottom: 1px solid;
+    /* border-bottom: 1px solid; */
     padding: 10px;
+
+    @media screen and (max-width: 700px) {
+      width: 90%;
+    }
   }
 
   button {
@@ -67,7 +71,7 @@ const StyledNav = styled(animated.nav)`
 
   h2 {
     font-size: 2rem;
-    font-weight: bolder;
+    text-shadow: 0px 4px 9px black;
   }
 `;
 
@@ -82,15 +86,26 @@ const AboutLettering = () => {
 export const NavBar = observer(() => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [showingWidth, setShowingWidth] = useState(
+    window.innerWidth < 700 ? "90%" : "50%"
+  );
 
   const { top, opacity, width } = useSpring({
     top: NavState.top,
     opacity: NavState.shouldShow ? 1 : 0,
-    width: NavState.shouldShow ? "50%" : "0%",
+    width: NavState.shouldShow ? showingWidth : "20%",
     config: config.molasses,
   });
 
-  useLayoutEffect(() => {}, [location.pathname]);
+  useLayoutEffect(() => {
+    const resizeEvent = () => {
+      setShowingWidth(window.innerWidth < 700 ? "90%" : "50%");
+    };
+    window.addEventListener("resize", resizeEvent);
+    return () => {
+      window.removeEventListener("resize", resizeEvent);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     const height = NavState.top;

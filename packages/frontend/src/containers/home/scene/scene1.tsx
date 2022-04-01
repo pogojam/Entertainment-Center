@@ -4,45 +4,55 @@ import { StyledSceneCaption, StyledSceneHeading } from "./scene1.styles";
 import { useFrame } from "@react-three/fiber";
 import { NavState } from "../../../components/nav";
 import { Page } from "../../../components/page/page";
+import { BackgroundState } from "../../../components/background/background";
+import { observer } from "mobx-react";
 
-export const Scene1 = ({ style }) => {
+export const Scene1 = observer(({ style }) => {
   const { opacity, header } = useSpring({
     opacity: 0,
     header: [0.3, 0.3, 1],
   });
   const conRef = useRef(null);
+  const headingRef = useRef(null);
   // useFrame((e) => {
   //   header.start([e.mouse.x * -0.5, e.mouse.y], {
   //     config: config.stiff,
   //   });
   // });
-  const setNavPos = (observer) => {
-    const [{ target }] = observer;
+  const setNavPos = (nodeObserver) => {
+    const target = headingRef.current;
     const { top, height } = target.getBoundingClientRect();
     const shift = top + height;
 
     NavState.setTopPos(shift > 0 ? shift : window.innerHeight * 0.55);
     NavState.setTopPos(shift > 0 ? shift : window.innerHeight * 0.55);
   };
+
   useLayoutEffect(() => {
-    opacity.start(1, { config: { duration: 2000 } });
-    NavState.setShouldShow(true);
-    const observer = new ResizeObserver(setNavPos);
+    if (BackgroundState.hasLoaded) {
+      opacity.start(1, { config: { duration: 2000 } });
+
+      setTimeout(() => {
+        NavState.setShouldShow(true);
+      }, 500);
+    }
+
+    const nodeObserver = new ResizeObserver(setNavPos);
     if (conRef.current) {
-      observer.observe(conRef.current);
+      nodeObserver.observe(conRef.current);
     }
     return () => {
-      observer.disconnect();
+      nodeObserver.disconnect();
     };
-  }, []);
+  }, [BackgroundState.hasLoaded]);
 
   return (
     <Page index={0}>
-      <StyledSceneCaption>
+      <StyledSceneCaption ref={conRef}>
         <StyledSceneHeading
           id={"HomeContainer-Heading"}
-          ref={conRef}
-          style={{ opacity: style.opacity }}
+          ref={headingRef}
+          style={{ opacity: BackgroundState.hasLoaded ? style.opacity : 0 }}
         >
           <animated.h1
             // style={{
@@ -78,4 +88,4 @@ export const Scene1 = ({ style }) => {
       </StyledSceneCaption>
     </Page>
   );
-};
+});

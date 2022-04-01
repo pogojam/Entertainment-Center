@@ -43,24 +43,34 @@ export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
 `;
 
 export const StyledSceneHeading = styled(animated.div)`
-  font-size: 7vw;
   line-height: 0.8em;
     display: flex;
     gap: 0.4em;
     justify-content: center;
+    opacity: 0;
 
+    min-height: 45px;
+    align-items: center;
 
   h1{
-    letter-spacing: 42px;
+    white-space: nowrap;
     text-transform: uppercase;
+    text-shadow: 0px 4px 9px black;
     /* text-shadow: 1px 7px 13px #a8a3ed; */
   }
     .Name-1{
     /* text-shadow: 1px 7px 13px #e80000; */
     }
 
-  @media screen and (max-width: 700px){
-      font-size: 20px;
+  @media screen and (min-width: 700px){
+      font-size: 30px;
+      letter-spacing: 5.3vw;
+      font-weight: 900;
   }
 
+  @media screen and (max-width: 700px){
+      font-size: 15px;
+      letter-spacing: 25px;
+      font-weight: 900;
+  }
 `;

@@ -12,12 +12,13 @@ import "./home.css";
 import { About } from "./scene/about";
 import { Scene1 } from "./scene/scene1";
 import { Scene2 } from "./scene/scene2";
+import { observer } from "mobx-react";
 
 const StyledHomeContainer = styled.div`
   display: inline;
 `;
 
-function HomeContainer() {
+const HomeContainer = observer(() => {
   const location = useLocation();
   const transitions = useTransition(location, {
     from: { opacity: 0 },
@@ -41,6 +42,6 @@ function HomeContainer() {
       </PageManager>
     </StyledHomeContainer>
   );
-}
+});
 
 export default HomeContainer;
