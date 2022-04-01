@@ -4,8 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": " vite build",
-    "preview": "vite preview",
-    "prebuild": "test \"$CI\" = true && npx pnpm install -r --store=node_modules/.pnpm-store || echo skipping pnpm install"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@react-spring/three": "^9.4.3",
