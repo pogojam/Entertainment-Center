@@ -56,6 +56,7 @@ export const StyledSceneHeading = styled(animated.div)`
     white-space: nowrap;
     text-transform: uppercase;
     text-shadow: 0px 4px 9px black;
+    margin-right: -40px;
     /* text-shadow: 1px 7px 13px #a8a3ed; */
   }
     .Name-1{
@@ -69,8 +70,8 @@ export const StyledSceneHeading = styled(animated.div)`
   }
 
   @media screen and (max-width: 700px){
-      font-size: 15px;
-      letter-spacing: 25px;
+      font-size: 18px;
+      letter-spacing: 22px;
       font-weight: 900;
   }
 `;

@@ -54,17 +54,7 @@ export const Scene1 = observer(({ style }) => {
           ref={headingRef}
           style={{ opacity: BackgroundState.hasLoaded ? style.opacity : 0 }}
         >
-          <animated.h1
-            // style={{
-            //   textShadow: header.to(
-            //     (x, y) => `${x * 13}px ${y * 13}px ${2}px #a8a3ed`
-            //   ),
-            //   transform: header.to((v, p, s) => `scale(${s})`),
-            // }}
-            className="Name-2"
-          >
-            Ryan Breaux
-          </animated.h1>
+          <animated.h1>Ryan Breaux</animated.h1>
           {/* <animated.h1
             // style={{
             //   textShadow: header.to(
