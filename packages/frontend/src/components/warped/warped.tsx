@@ -26,7 +26,7 @@ export const WarpedPlane = memo(() => {
   );
 
   const initPlaneSize = [20, 20, 100, 100];
-  const initPlanePosition = [0, 0, 0];
+  const initPlanePosition = [0, 0, -3];
   const initPlaneRotation = [0, 0, 0];
 
   const { position, rotation, mouse, intensity } = useSpring({
@@ -45,7 +45,6 @@ export const WarpedPlane = memo(() => {
     if (unlockMouse) {
       mouse.start([e.mouse.x, e.mouse.y]);
     }
-
     if (planeRef.current) {
       // planeRef.current.position.y = yVal;
       // planeRef.current.position.z = zVal;
@@ -108,28 +107,31 @@ export const WarpedPlane = memo(() => {
   );
 
   return (
-    <AnimatedPlane
-      ref={planeRef}
-      rotation={rotation.to((...p) => p)}
-      args={initPlaneSize}
-      position={position.to((...p) => p)}
-    >
-      <a.shaderMaterial
-        uniforms-mouse={mouse.to((...p) => ({
-          type: "v2v",
-          value: new Vector2(p[0], p[1]),
-        }))}
-        uniforms-intensity={intensity.to((p) => ({
-          value: p,
-          type: "f",
-        }))}
-        transparent={true}
-        attach="material"
-        uniforms={uniforms}
-        vertexShader={vertex}
-        fragmentShader={frag}
-      />
-      {/* <customMaterial attach="material" color={"white"} map={img} /> */}
-    </AnimatedPlane>
+    <mesh scale={[3, 3, 3]}>
+      <AnimatedPlane
+        ref={planeRef}
+        rotation={rotation.to((...p) => p)}
+        args={initPlaneSize}
+        position={position.to((...p) => p)}
+      >
+        <a.shaderMaterial
+          uniforms-mouse={mouse.to((...p) => ({
+            type: "v2v",
+            value: new Vector2(p[0], p[1]),
+          }))}
+          uniforms-intensity={intensity.to((p) => ({
+            value: p,
+            type: "f",
+          }))}
+          transparent={false}
+          attach="material"
+          uniforms={uniforms}
+          vertexShader={vertex}
+          fragmentShader={frag}
+          depthTest={false}
+        />
+        {/* <customMaterial attach="material" color={"white"} map={img} /> */}
+      </AnimatedPlane>
+    </mesh>
   );
 });

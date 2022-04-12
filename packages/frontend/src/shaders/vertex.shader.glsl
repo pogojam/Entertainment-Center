@@ -165,5 +165,6 @@ void main() {
   // pos.z += distortin.x * sin(time);
 
   vUv = uv;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
+  vec3 pos = position;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
 }

@@ -65,13 +65,13 @@ export const StyledSceneHeading = styled(animated.div)`
 
   @media screen and (min-width: 700px){
       font-size: 30px;
-      letter-spacing: 5.3vw;
+      letter-spacing: 30px;
       font-weight: 900;
   }
 
   @media screen and (max-width: 700px){
       font-size: 18px;
-      letter-spacing: 22px;
+      letter-spacing: 10px;
       font-weight: 900;
   }
 `;

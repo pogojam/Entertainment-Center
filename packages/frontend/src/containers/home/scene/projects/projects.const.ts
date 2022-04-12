@@ -82,7 +82,7 @@ export default [
       "https://res.cloudinary.com/dxjse9tsv/image/upload/v1552517899/StockSnap_TJ20HKB9BY.jpg",
     stack: ["react", "javascript", "apple"],
     video:
-      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1574025341/video/textbeast_4x1_raw.mp4",
+      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1574027036/video/bellcaptian_Hight_4x1.mp4",
     tag: "Bussiness Solution, Hyatt",
     color: "#FE463F",
     type: "mobile",
@@ -98,7 +98,7 @@ export default [
       "https://res.cloudinary.com/dxjse9tsv/image/upload/v1570561245/git/Screen_Shot_2019-10-08_at_12.00.02_PM.png",
     stack: ["react", "npm", "javascript"],
     video:
-      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1574025341/video/textbeast_4x1_raw.mp4",
+      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1574027036/video/bellcaptian_Hight_4x1.mp4",
     tag: "Developer productivity tool",
     color: "#fc0e34",
     type: "library",
@@ -114,7 +114,7 @@ export default [
       "https://res.cloudinary.com/dxjse9tsv/image/upload/v1570489149/git/Screen_Shot_2019-10-07_at_3.52.53_PM.png",
     stack: ["react", "npm", "javascript"],
     video:
-      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1574025341/video/textbeast_4x1_raw.mp4",
+      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1574027036/video/bellcaptian_Hight_4x1.mp4",
     tag: "Developer npm library",
     color: "#dfff11",
     type: "library",
@@ -133,7 +133,7 @@ export default [
     stack: ["javascript"],
     tag: "Big data tool",
     video:
-      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1574026168/video/textbeast_4X1_High.mp4",
+      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1574027036/video/bellcaptian_Hight_4x1.mp4",
     color: "#6600ff",
     type: "tool",
   },
@@ -149,7 +149,7 @@ export default [
     stack: ["javascript", "react"],
     tag: "Business Website",
     video:
-      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1573718526/video/azbutler_4X1_High.mp4",
+      "https://res.cloudinary.com/dxjse9tsv/video/upload/v1574027036/video/bellcaptian_Hight_4x1.mp4",
     color: "#fc0e34",
     type: "web",
   },

@@ -5,17 +5,20 @@ import { makeAutoObservable } from "mobx";
 import { observer } from "mobx-react";
 import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
+import { BackgroundState } from "./background/background";
 
 class State {
-  top = window.innerHeight * 0.5;
+  top = 0;
   opacityAnim;
   shouldShow = false;
   path = null;
 
   constructor() {
     makeAutoObservable(this);
+    this.setTopPos(window.innerHeight * 0.5);
   }
 
   setTopPos(newPos: number) {
@@ -98,6 +101,18 @@ export const NavBar = observer(() => {
   });
 
   useLayoutEffect(() => {
+    if (location.pathname !== "/") {
+      setTimeout(() => {
+        top.start(window.innerHeight * 0.09);
+      }, 100);
+    }
+    if (location.pathname !== "/" && BackgroundState.hasLoaded) {
+      NavState.setShouldShow(true);
+    }
+  }, [location.pathname, BackgroundState.hasLoaded]);
+
+  useLayoutEffect(() => {
+    // RESIZE EVENTS
     const resizeEvent = () => {
       setShowingWidth(window.innerWidth < 700 ? "90%" : "50%");
     };
@@ -116,12 +131,9 @@ export const NavBar = observer(() => {
     <Fragment>
       <StyledNav style={{ top, opacity }}>
         <animated.div style={{ width, opacity }} className="wrapper">
-          <AboutLettering />
-          {/* <Button
-            onClick={() => NavState.switchPath("Projects")}
-            label="Projects"
-          />
-          <Button onClick={() => navigate("/")} label="About" /> */}
+          {/* <AboutLettering /> */}
+          <Button onClick={() => navigate("/Projects")} label="Projects" />
+          <Button onClick={() => navigate("/About")} label="About" />
         </animated.div>
       </StyledNav>
       <Outlet />

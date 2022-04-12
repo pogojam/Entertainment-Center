@@ -1,4 +1,4 @@
-import { Scroll } from "@react-three/drei";
+import { Scroll, Stars } from "@react-three/drei";
 import { useEffect, useLayoutEffect } from "react";
 import { Outlet, Route, Routes, useLocation } from "react-router";
 import { useTransition, config } from "react-spring";
@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { Background } from "../../components/background/background";
 import Planet from "../../components/background/Planet";
 import { Page, PageManager } from "../../components/page/page";
-import { StarGroup } from "../../components/star/star";
 import { WarpedPlane } from "../../components/warped/warped";
 import "./home.css";
 import { About } from "./scene/about";
@@ -30,13 +29,15 @@ const HomeContainer = observer(() => {
   return (
     <StyledHomeContainer>
       <Background>
+        {/* <Stars radius={100} depth={50} count={5000} factor={4} /> */}
         <WarpedPlane />
+        {/* <About /> */}
       </Background>
       <PageManager>
         {transitions((props, items) => (
           <Routes location={items}>
             <Route index element={<Scene1 style={props} />} />
-            <Route path="About" element={<About />} />
+            {/* <Route path="About" element={<About />} /> */}
           </Routes>
         ))}
       </PageManager>

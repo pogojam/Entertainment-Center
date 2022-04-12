@@ -3,6 +3,7 @@ import {
   OrbitControls,
   PerspectiveCamera,
   ScrollControls,
+  Stars,
   useProgress,
 } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
@@ -45,7 +46,7 @@ const StyledBackground = styled.div`
   height: 100%;
 
   #Background_Canvas {
-    background-color: #d42323;
+    background-color: #dc1212;
     transition: background-color 0.8s linear;
   }
 `;
@@ -59,13 +60,6 @@ const StyledLoader = styled(animated.div)`
 `;
 
 function Loader({ progress, style }) {
-  useEffect(() => {
-    return () => {
-      setTimeout(() => {
-        BackgroundState.setLoadState(true);
-      }, 800);
-    };
-  }, []);
   return (
     <Html center>
       <StyledLoader style={style}>
@@ -137,18 +131,22 @@ const SetupCanvas = ({ children }) => {
     delay: 200,
     config: config.molasses,
   });
+
+  useEffect(() => {
+    if (progress === 100) {
+      BackgroundState.setLoadState(true);
+    }
+  }, [progress]);
+
   return (
     <>
       {/* <GlassOverLay /> */}
-      <Canvas
-        id="Background_Canvas"
-        shadows
-        dpr={[1, 2]}
-        camera={{ position: [0, 3.2, 40], fov: 12 }}
-      >
+      <Canvas id="Background_Canvas" dpr={[1, 2]}>
         {transitions(
           (props, items) =>
-            progress !== 100 && <Loader style={props} progress={progress} />
+            !BackgroundState.hasLoaded && (
+              <Loader style={props} progress={progress} />
+            )
         )}
         <Suspense fallback={<></>}>
           <ScrollControls
@@ -158,7 +156,8 @@ const SetupCanvas = ({ children }) => {
             horizontal={false} // Can also scroll horizontally (default: false)
             infinite={false} // Can also scroll infinitely (default: false)
           >
-            <PerspectiveCamera ref={cameraRef} />
+            {/* <PerspectiveCaera ref={cameraRef} /> */}
+            {/* <OrbitControls /> */}
             {children}
           </ScrollControls>
         </Suspense>
