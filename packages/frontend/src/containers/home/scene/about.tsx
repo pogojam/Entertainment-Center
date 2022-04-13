@@ -1,6 +1,6 @@
 //@ts-noCheck
 
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader, useStore } from "@react-three/fiber";
 import { a, animated } from "@react-spring/three";
 import chance from "chance";
 import React, { useMemo, useEffect, useRef, useState } from "react";
@@ -13,16 +13,13 @@ import frag from "../../../shaders/project.shader.glsl?raw";
 import vertex from "../../../shaders/project.vertex.glsl?raw";
 import { sRGBEncoding, VideoTexture } from "three";
 import { Image, Plane, useAspect, useTexture } from "@react-three/drei";
+import { useLocation } from "react-router";
 
 const initPlaneSize = [7, 4, 100, 100, 20];
 const AnimatedPlane = animated(Plane);
 
 const VideoTile = ({ videoTexture, i, poster }) => {
   const materialRef = useRef();
-  const size = useAspect(7, 4);
-  const img = useTexture(
-    "https://res.cloudinary.com/dxjse9tsv/image/upload/v1537298661/Portfolio/Royal.png"
-  );
 
   const { position } = useSpring({
     position: [0, 0, 0],
@@ -71,7 +68,7 @@ const VideoTile = ({ videoTexture, i, poster }) => {
   );
 };
 
-export const About = () => {
+export const About = ({ path }) => {
   const scale = useAspect("cover", 1920, 1080, 1);
   const groupRef = useRef();
 
@@ -101,9 +98,10 @@ export const About = () => {
 
   return (
     <animated.group rotation={[-0.2, 0, 0]} ref={groupRef}>
-      {Projects.map((data, i) => (
-        <VideoTile key={i} videoTexture={videos[i]} {...data} i={i} />
-      ))}
+      {path === "/Projects" &&
+        Projects.map((data, i) => (
+          <VideoTile key={i} videoTexture={videos[i]} {...data} i={i} />
+        ))}
     </animated.group>
   );
 };

@@ -19,7 +19,9 @@ const StyledPage = styled.div<pageProps>`
 
 const StyledPageManager = styled.div`
   pointer-events: none;
-
+  button {
+    pointer-events: all;
+  }
   /* position: relative; */
 `;
 

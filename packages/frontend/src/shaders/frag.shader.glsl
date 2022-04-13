@@ -1,4 +1,4 @@
-#define MAX_STEPS 80
+#define MAX_STEPS 50
 #define MAX_DIST 10.
 #define SURF_DIST .001
 uniform sampler2D planeTexture;
@@ -12,6 +12,7 @@ uniform float opacity;
 varying vec2 vUv;
 uniform float time;
 uniform float intensity;
+uniform float mSize;
 uniform vec2 mouse;
 
 mat2 Rotate(float a) {
@@ -36,8 +37,9 @@ float smin(float a, float b, float k) {
 }
 
 vec3 GetColor(float amount) {
-  vec3 col = 0.5 + 0.5 * cos(6.28319 *
-                             (vec3(0.3, 0.0, 0.0) + amount * vec3(1., 1., .0)));
+  vec3 col =
+      0.5 +
+      0.5 * cos(6.28319 * (vec3(0.8, 0.3, 0.02) + amount * vec3(1., 1., .0)));
   return col * amount;
 }
 
@@ -45,17 +47,21 @@ float MakeSphere(vec3 p, vec4 s) { return length(p - s.xyz) - s.w; }
 
 float GetDist(vec3 p) {
 
-  float sphereDist = MakeSphere(p, vec4(0, 1, 6, 1));
-  float sphereBackgroundDist = MakeSphere(p, vec4(0, 1, 6, 3.5));
+  float sphereDist =
+      MakeSphere(p, vec4(0, 1, 6, mix(1.2, 1.8, sin(time * .4) + .3)));
+  // float sphereBackgroundDist = MakeSphere(p, vec4(0, 1, 6, 3.5));
 
-  float hollowSphere = abs(sphereDist) - .03;
-  float hollowSphereBackground = abs(sphereBackgroundDist) - .03;
+  float hollowSphere = abs(sphereDist) - .1;
+  // float hollowSphereBackground = abs(sphereBackgroundDist) - .03;
 
-  float sphereDistGyroid = smin(hollowSphere, Gyroid(p, intensity * 1.4), -.01);
-  float sphereDistGyroidBackground =
-      smin(hollowSphereBackground, Gyroid(p, intensity), -.02);
+  float sphereDistGyroid =
+      smin(hollowSphere, Gyroid(vec3(p.xy, 3.3) * 1500., intensity * 2.4), -.1);
 
-  sphereDist = min(sphereDistGyroid, sphereDistGyroidBackground);
+  // float sphereDistGyroidBackground =
+  //     smin(hollowSphereBackground, Gyroid(p, intensity), -.02);
+
+  sphereDist = min(sphereDistGyroid, sphereDist);
+  sphereDist = sphereDistGyroid;
 
   // sphereDist = sphereDistGyroid;
 
@@ -64,12 +70,12 @@ float GetDist(vec3 p) {
   // float d = min(sphereDist, orbitSphere);
   float d = sphereDist;
 
-  float plane = p.y * 3.4;
+  // float plane = p.y * 3.4;
 
-  d = smin(plane, d, .9);
+  // d = smin(plane, d, .9);
 
-  float mouseDelta = .8;
-  vec4 ms = vec4(mouse.x * mouseDelta, (mouse.y + .8) * mouseDelta, 6, 1.0);
+  float mouseDelta = 1.8;
+  vec4 ms = vec4(mouse.x * mouseDelta, (mouse.y + 0.5) * mouseDelta, 5., mSize);
   float mouseSphere = MakeSphere(p, ms);
   d = smin(d, mouseSphere, .9);
 
@@ -105,14 +111,15 @@ vec4 GetLight(vec3 p) {
   vec3 n = GetNormal(p);
 
   float dif = dot(n, l) * .5 + .5;
-  vec4 coloredLight = vec4(.2, .0, .0, 1.);
+  vec4 coloredLight = vec4(.0, .0, .0, 1.);
 
   // float dif = clamp(dot(n, l), 0., 1.);
-  float d = RayMarch(p + n * SURF_DIST * -2., l);
+  // float d = RayMarch(p + n * SURF_DIST * 2., l);
+  float d = dif;
   if (d < length(l - p)) {
     coloredLight = vec4(GetColor(dif), 1.);
   } else {
-    coloredLight = vec4(vec3(dif), 1.);
+    coloredLight = vec4(GetColor(dif) + .1, 1.);
   }
 
   return coloredLight;
@@ -146,5 +153,5 @@ void main() {
   // col = texture(planeTexture, rd.xy) * col;
   // col = .03 * GetColor(2. * length(p));
 
-  gl_FragColor = vec4(col.xyz, 1.);
+  gl_FragColor = col;
 }

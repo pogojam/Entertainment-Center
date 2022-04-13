@@ -29,9 +29,9 @@ const HomeContainer = observer(() => {
   return (
     <StyledHomeContainer>
       <Background>
-        {/* <Stars radius={100} depth={50} count={5000} factor={4} /> */}
+        <Stars radius={100} depth={50} count={5000} factor={4} />
         <WarpedPlane />
-        {/* <About /> */}
+        <About path={location.pathname} />
       </Background>
       <PageManager>
         {transitions((props, items) => (

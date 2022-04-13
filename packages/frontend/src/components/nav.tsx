@@ -3,40 +3,43 @@ import { Anchor, Button, Nav } from "grommet";
 import * as Icons from "grommet-icons";
 import { makeAutoObservable } from "mobx";
 import { observer } from "mobx-react";
+import { types } from "mobx-state-tree";
 import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
+import { useStore } from "../models";
 import { BackgroundState } from "./background/background";
 
-class State {
-  top = 0;
-  opacityAnim;
-  shouldShow = false;
-  path = null;
+export const NavModel = types
+  .model({
+    top: types.optional(types.number, 0),
+    path: types.optional(types.string, ""),
+    shouldShow: types.optional(types.boolean, false),
+  })
+  .actions((self) => ({
+    setTopPos(newPos: number) {
+      self.top = newPos;
+    },
 
-  constructor() {
-    makeAutoObservable(this);
-    this.setTopPos(window.innerHeight * 0.5);
-  }
-
-  setTopPos(newPos: number) {
-    this.top = newPos;
-  }
-  switchPath(path) {
-    this.path = path;
-  }
-
-  setShouldShow(o) {
-    this.shouldShow = o;
-  }
-}
-
-export const NavState = new State();
+    switchPath(path) {
+      self.path = path;
+    },
+    setShouldShow(o) {
+      self.shouldShow = o;
+    },
+  }))
+  .views((self) => ({
+    get isTop() {
+      if (self.path === "/") {
+        return false;
+      }
+      return true;
+    },
+  }));
 
 const StyledNav = styled(animated.nav)`
-  position: absolute;
   width: 100%;
   z-index: 99;
   display: flex;
@@ -61,7 +64,8 @@ const StyledNav = styled(animated.nav)`
     text-transform: uppercase;
     font-weight: bold;
     transition: transform 0.3s;
-    color: black;
+    color: white;
+    /* pointer-events: none; */
   }
 
   button:hover {
@@ -86,30 +90,42 @@ const AboutLettering = () => {
   );
 };
 
-export const NavBar = observer(() => {
-  const navigate = useNavigate();
+export const NavMain = observer(() => {
+  const { NavStore } = useStore();
   const location = useLocation();
+
+  useEffect(() => {
+    NavStore.switchPath(location.pathname);
+  }, [location.pathname]);
+
+  return (
+    <>
+      <Outlet />
+    </>
+  );
+});
+
+export const NavBar = observer(() => {
+  const { NavStore, Scene1Store } = useStore();
+  const navigate = useNavigate();
   const [showingWidth, setShowingWidth] = useState(
     window.innerWidth < 700 ? "90%" : "50%"
   );
 
-  const { top, opacity, width } = useSpring({
-    top: NavState.top,
-    opacity: NavState.shouldShow ? 1 : 0,
-    width: NavState.shouldShow ? showingWidth : "20%",
+  const { top, opacity, width, borderColor } = useSpring({
+    top: 0,
+    opacity: NavStore.shouldShow ? 1 : 0,
+    borderColor: NavStore.isTop ? "transparent" : "white",
+    width: NavStore.shouldShow ? showingWidth : "20%",
     config: config.molasses,
   });
 
   useLayoutEffect(() => {
-    if (location.pathname !== "/") {
-      setTimeout(() => {
-        top.start(window.innerHeight * 0.09);
-      }, 100);
+    // Shows background on initial load.
+    if (NavStore.path !== "/" && BackgroundState.hasLoaded) {
+      NavStore.setShouldShow(true);
     }
-    if (location.pathname !== "/" && BackgroundState.hasLoaded) {
-      NavState.setShouldShow(true);
-    }
-  }, [location.pathname, BackgroundState.hasLoaded]);
+  }, [NavStore.path, BackgroundState.hasLoaded]);
 
   useLayoutEffect(() => {
     // RESIZE EVENTS
@@ -122,21 +138,15 @@ export const NavBar = observer(() => {
     };
   }, []);
 
-  useLayoutEffect(() => {
-    const height = NavState.top;
-    top.set(height);
-  }, [NavState.top]);
-
   return (
     <Fragment>
-      <StyledNav style={{ top, opacity }}>
+      <StyledNav style={{ opacity, color: borderColor }}>
         <animated.div style={{ width, opacity }} className="wrapper">
           {/* <AboutLettering /> */}
           <Button onClick={() => navigate("/Projects")} label="Projects" />
           <Button onClick={() => navigate("/About")} label="About" />
         </animated.div>
       </StyledNav>
-      <Outlet />
     </Fragment>
   );
 });

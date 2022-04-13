@@ -25,7 +25,7 @@ import { config, useTransition } from "@react-spring/three";
 import { animated } from "react-spring";
 
 class State {
-  hasLoaded = false;
+  hasLoaded = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -46,7 +46,14 @@ const StyledBackground = styled.div`
   height: 100%;
 
   #Background_Canvas {
-    background-color: #dc1212;
+    background: radial-gradient(
+      at 50% 100%,
+      #873740 0%,
+      #272730 40%,
+      #171720 80%,
+      #070710 100%
+    );
+
     transition: background-color 0.8s linear;
   }
 `;
@@ -110,16 +117,6 @@ const About = () => {
   );
 };
 
-const GlassOverLay = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #13141454;
-  z-index: 9;
-  backdrop-filter: blur(9px);
-  pointer-events: none;
-`;
-
 const SetupCanvas = ({ children }) => {
   const cameraRef = useRef(null);
   const { active, progress, loaded } = useProgress();
@@ -132,34 +129,13 @@ const SetupCanvas = ({ children }) => {
     config: config.molasses,
   });
 
-  useEffect(() => {
-    if (progress === 100) {
-      BackgroundState.setLoadState(true);
-    }
-  }, [progress]);
-
   return (
     <>
-      {/* <GlassOverLay /> */}
       <Canvas id="Background_Canvas" dpr={[1, 2]}>
-        {transitions(
-          (props, items) =>
-            !BackgroundState.hasLoaded && (
-              <Loader style={props} progress={progress} />
-            )
-        )}
         <Suspense fallback={<></>}>
-          <ScrollControls
-            pages={0} // Each page takes 100% of the height of the canvas
-            distance={1} // A factor that increases scroll bar travel (default: 1)
-            damping={4} // Friction, higher is faster (default: 4)
-            horizontal={false} // Can also scroll horizontally (default: false)
-            infinite={false} // Can also scroll infinitely (default: false)
-          >
-            {/* <PerspectiveCaera ref={cameraRef} /> */}
-            {/* <OrbitControls /> */}
-            {children}
-          </ScrollControls>
+          {/* <PerspectiveCaera ref={cameraRef} /> */}
+          {/* <OrbitControls /> */}
+          {children}
         </Suspense>
       </Canvas>
     </>

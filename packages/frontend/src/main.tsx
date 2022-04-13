@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import HomeContainer from "./containers/home/home";
-import { NavBar } from "./components/nav";
+import { NavBar, NavMain } from "./components/nav";
 import { Grommet } from "grommet";
 import theme from "./theme";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
@@ -17,7 +17,7 @@ const AppRoutes = () => {
   return (
     <Grommet style={{ height: "100%" }} theme={theme}>
       <Routes>
-        <Route path="/*" element={<NavBar />}>
+        <Route path="/*" element={<NavMain />}>
           <Route path="*" element={<HomeContainer />} />
           {/* <Route path="/Login" element={<Login />} />
               <Route path="/Movies" element={<MoviesContainer />} /> */}

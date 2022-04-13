@@ -2,14 +2,14 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 
 export const StyledSceneContainer = styled.div`
-  color: black;
+  color: white;
 
   p {
     font-weight: 700;
   }
 
   .Scene1-SubCaption {
-    color: black;
+    color: white;
     display: flex;
     flex-direction: column;
     will-change: transform, opacity;
@@ -21,7 +21,7 @@ interface ISceneCaption {
 }
 export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
     align-items: center;
-  color: black;
+  color: white;
   top: 0;
   left: 15vw;
   justify-content: center;
@@ -36,7 +36,7 @@ export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
     p{
       font-size: 24px;
     font-weight: bolder;
-    color: black;
+    color: white;
     text-shadow: rgb(172 128 128) -1.08454px -0.67567px 14px;
     }
 
@@ -44,7 +44,7 @@ export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
 
 export const StyledSceneHeading = styled(animated.div)`
   line-height: 0.8em;
-    display: flex;
+    display: grid;
     gap: 0.4em;
     justify-content: center;
     opacity: 0;
