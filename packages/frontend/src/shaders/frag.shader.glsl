@@ -14,6 +14,7 @@ uniform float time;
 uniform float intensity;
 uniform float mSize;
 uniform vec2 mouse;
+uniform vec4 manualOrbColor;
 
 mat2 Rotate(float a) {
   float s = sin(a);
@@ -116,7 +117,11 @@ vec4 GetLight(vec3 p) {
   // float d = RayMarch(p + n * SURF_DIST * 2., l);
   float d = dif;
   if (d < length(l - p)) {
-    coloredLight = vec4(GetColor(dif), 1.);
+    if (manualOrbColor.a == .0) {
+      coloredLight = vec4(GetColor(dif), 1.);
+    } else {
+      coloredLight = manualOrbColor;
+    }
   } else {
     coloredLight = vec4(GetColor(dif) + .1, 1.);
   }

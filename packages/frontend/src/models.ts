@@ -10,6 +10,7 @@ export const AnimModel = types
         mouse: types.optional(types.array(types.number), [0, 1]),
         intensity: types.optional(types.number, .4),
         mouseLock: types.optional(types.boolean, false),
+        orbColor: types.optional(types.array(types.number), [0, 0, 0, 0]),
     })
     .actions((self) => ({
         playEntrance(state) {
@@ -23,8 +24,12 @@ export const AnimModel = types
         },
         setMouse(m) {
             self.mouse = m
-        }
-        , setMouseLock(state) {
+        },
+        setOrbColor(c) {
+            debugger
+            self.orbColor = c
+        },
+        setMouseLock(state) {
             self.mouseLock = state
         }
     }));

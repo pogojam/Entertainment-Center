@@ -1,17 +1,13 @@
-import { Float, PresentationControls, Scroll, Stars } from "@react-three/drei";
-import { useEffect, useLayoutEffect } from "react";
-import { Outlet, Route, Routes, useLocation } from "react-router";
-import { useTransition, config } from "react-spring";
+import { Float, Stars } from "@react-three/drei";
+import { observer } from "mobx-react";
+import { Route, Routes, useLocation } from "react-router";
+import { config, useTransition } from "react-spring";
 import styled from "styled-components";
 import { Background } from "../../components/background/background";
-import Planet from "../../components/background/Planet";
-import { Page, PageManager } from "../../components/page/page";
+import { PageManager } from "../../components/page/page";
 import { WarpedPlane } from "../../components/warped/warped";
 import "./home.css";
-import { About } from "./scene/about";
 import { Scene1 } from "./scene/scene1";
-import { Scene2 } from "./scene/scene2";
-import { observer } from "mobx-react";
 
 const StyledHomeContainer = styled.div`
   display: inline;
@@ -37,7 +33,7 @@ const HomeContainer = observer(() => {
           <Stars radius={100} depth={50} count={5000} factor={4} />
         </Float>
         <WarpedPlane />
-        <About path={location.pathname} />
+        {/* <About path={location.pathname} /> */}
       </Background>
       <PageManager>
         {transitions((props, items) => (

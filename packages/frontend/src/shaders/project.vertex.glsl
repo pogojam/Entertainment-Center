@@ -21,7 +21,7 @@ void main() {
 
   // Scaling
   pos.xy *= 1. + .2 * dist;
-  vUv *= 1. + .2 * dist;
+  // vUv *= 1. + .2 * dist;
   // pos.y += 10.;
 
   vec4 modelViewPosition = modelViewMatrix * vec4(pos, 1.0);

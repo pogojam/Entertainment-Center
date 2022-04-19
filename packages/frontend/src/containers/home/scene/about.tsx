@@ -1,6 +1,7 @@
 //@ts-noCheck
 
-import { Canvas, useFrame, useLoader, useStore } from "@react-three/fiber";
+import { useStore } from "../../../models";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { a, animated } from "@react-spring/three";
 import chance from "chance";
 import React, { useMemo, useEffect, useRef, useState } from "react";
@@ -19,6 +20,22 @@ import { observer } from "mobx-react";
 const initPlaneSize = [4, 3, 100, 100, 20];
 const AnimatedPlane = animated(Plane);
 
+const hexToRgbA = (hex) => {
+  var c;
+  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    c = hex.substring(1).split("");
+    if (c.length == 3) {
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+    c = "0x" + c.join("");
+    c = [(c >> 16) & 255, (c >> 8) & 255, c & 255];
+    c = c.map((u) => u / 255);
+    c.push(1);
+    return c;
+  }
+  throw new Error("Bad Hex");
+};
+
 const getCurrentIndex = ({ factor, pos, listLength }) => {
   const len = listLength - 1;
   const index = Math.round(pos / factor);
@@ -31,7 +48,8 @@ const getCurrentIndex = ({ factor, pos, listLength }) => {
   return index;
 };
 
-const VideoTile = observer(({ videoTexture, i, length, path }) => {
+const VideoTile = observer(({ videoTexture, i, length, path, color }) => {
+  const { AnimStore } = useStore();
   const materialRef = useRef();
   const factor = 3.5;
   const setY = (i) => factor * i;
@@ -86,13 +104,10 @@ const VideoTile = observer(({ videoTexture, i, length, path }) => {
       dist.start(distance, { config: config.molasses });
 
       position.start([2, relativePosition, 0]);
-      // scale.start(1 + 0.1 * distance);
-      // if (Math.abs(currentIndex) === i) {
-      //   scale.start(1.1);
-      // } else {
-      //   scale.start(1);
-      // }
-      // console.log(pos, currentIndex, i);
+
+      if (Math.abs(currentIndex) === i) {
+        const newOrbColor = hexToRgbA(color);
+      }
     }
   });
 
@@ -130,7 +145,7 @@ const VideoTile = observer(({ videoTexture, i, length, path }) => {
   );
 });
 
-export const About = ({ path }) => {
+export const About = observer(({ path }) => {
   const scale = useAspect("cover", 1920, 1080, 1);
   const groupRef = useRef();
 
@@ -176,4 +191,4 @@ export const About = ({ path }) => {
       ))}
     </animated.group>
   );
-};
+});

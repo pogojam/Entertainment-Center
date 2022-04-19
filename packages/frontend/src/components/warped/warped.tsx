@@ -11,7 +11,7 @@ import React, {
   useState,
   useLayoutEffect,
 } from "react";
-import { Color, Vector2, MathUtils } from "three";
+import { Color, Vector2, MathUtils, Vector4 } from "three";
 import "../../materials/customMaterial";
 import { useStore } from "../../models";
 import frag from "../../shaders/frag.shader.glsl?raw";
@@ -63,7 +63,7 @@ const entranceSequence = async ({
   });
 };
 
-const useAnimState = ({ intensity, mSize, mouse, planeRef }) => {
+const useAnimState = ({ intensity, mSize, mouse, planeRef, orbColor }) => {
   const { NavStore, AnimStore } = useStore();
   const [unlockMouse, setUnlockMouse] = useState(false);
 
@@ -115,7 +115,8 @@ export const WarpedPlane = observer(() => {
   const initPlanePosition = [0, 0, -3];
   const initPlaneRotation = [0, 0, 0];
 
-  const { position, rotation, mouse, intensity, mSize } = useSpring({
+  const { orbColor, position, rotation, mouse, intensity, mSize } = useSpring({
+    orbColor: AnimStore.orbColor,
     mSize: AnimStore.mSize,
     rotation: initPlaneRotation,
     position: initPlanePosition,
@@ -131,7 +132,7 @@ export const WarpedPlane = observer(() => {
     mSize.set({ config: config.gentle });
   }, []);
 
-  useAnimState({ mouse, mSize, intensity, planeRef });
+  useAnimState({ mouse, mSize, orbColor, intensity, planeRef });
 
   const uniforms = useMemo(
     () => ({
@@ -145,6 +146,7 @@ export const WarpedPlane = observer(() => {
       opacity: { value: 1 },
       color: { value: new Color("white") },
       time: { value: 0 },
+      manualOrbColor: { type: "v4v", value: new Vector4(0.1, 0.1, 0.1, 0.0) },
     }),
     []
   );
@@ -160,6 +162,10 @@ export const WarpedPlane = observer(() => {
         <a.shaderMaterial
           uniforms-mSize={mSize.to((p) => ({
             value: p,
+          }))}
+          uniforms-manualOrbColor={orbColor.to((...p) => ({
+            type: "v4v",
+            value: new Vector4(p[0], p[1], p[2], p[3]),
           }))}
           uniforms-mouse={mouse.to((...p) => ({
             type: "v2v",

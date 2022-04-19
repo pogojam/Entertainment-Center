@@ -46,12 +46,13 @@ const StyledNav = styled(animated.nav)`
   justify-content: center;
 
   .wrapper {
-    width: 40%;
+    width: 100%;
     display: flex;
     justify-content: center;
     border-top: 1px solid;
     /* border-bottom: 1px solid; */
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 
     @media screen and (max-width: 700px) {
       width: 90%;
@@ -77,15 +78,16 @@ const StyledNav = styled(animated.nav)`
   // About Lettering
 
   h2 {
-    font-size: 2rem;
+    font-size: 1rem;
     text-shadow: 0px 4px 9px black;
+    letter-spacing: 1px;
   }
 `;
 
 const AboutLettering = () => {
   return (
     <div>
-      <h2>Mindful Developer</h2>
+      <h2>human,software engineer,entrepreneur</h2>
     </div>
   );
 };
@@ -108,9 +110,7 @@ export const NavMain = observer(() => {
 export const NavBar = observer(() => {
   const { NavStore, Scene1Store } = useStore();
   const navigate = useNavigate();
-  const [showingWidth, setShowingWidth] = useState(
-    window.innerWidth < 700 ? "90%" : "50%"
-  );
+  const [showingWidth, setShowingWidth] = useState("100%");
 
   const { top, opacity, width, borderColor } = useSpring({
     top: 0,
@@ -130,7 +130,7 @@ export const NavBar = observer(() => {
   useLayoutEffect(() => {
     // RESIZE EVENTS
     const resizeEvent = () => {
-      setShowingWidth(window.innerWidth < 700 ? "90%" : "50%");
+      setShowingWidth("100%");
     };
     window.addEventListener("resize", resizeEvent);
     return () => {
@@ -142,9 +142,9 @@ export const NavBar = observer(() => {
     <Fragment>
       <StyledNav style={{ opacity, color: borderColor }}>
         <animated.div style={{ width, opacity }} className="wrapper">
-          {/* <AboutLettering /> */}
-          <Button onClick={() => navigate("/Projects")} label="Projects" />
-          <Button onClick={() => navigate("/About")} label="About" />
+          <AboutLettering />
+          {/* <Button onClick={() => navigate("/Projects")} label="Projects" />
+          <Button onClick={() => navigate("/About")} label="About" /> */}
         </animated.div>
       </StyledNav>
     </Fragment>
