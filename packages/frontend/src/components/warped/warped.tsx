@@ -70,7 +70,7 @@ const useAnimState = ({ intensity, mSize, mouse, planeRef }) => {
   useEffect(() => {
     if (NavStore.path === "/Projects") {
       // entranceSequence({ intensity, mouse, setUnlockMouse, mSize });
-      // intensity.set(3.3);
+      intensity.set(3.3);
       // mSize.set(3.2);
       setUnlockMouse(false);
       AnimStore.setMSize(4.2);
@@ -109,7 +109,7 @@ const useAnimState = ({ intensity, mSize, mouse, planeRef }) => {
 
 export const WarpedPlane = observer(() => {
   const planeRef = useRef();
-  const { AnimStore } = useStore();
+  const { AnimStore, NavStore } = useStore();
 
   const initPlaneSize = [20, 20, 100, 100];
   const initPlanePosition = [0, 0, -3];
@@ -174,7 +174,7 @@ export const WarpedPlane = observer(() => {
           uniforms={uniforms}
           vertexShader={vertex}
           fragmentShader={frag}
-          depthTest={false}
+          depthTest={NavStore.path === "/Projects"}
         />
         {/* <customMaterial attach="material" color={"white"} map={img} /> */}
       </AnimatedPlane>

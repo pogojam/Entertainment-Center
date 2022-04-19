@@ -16,7 +16,7 @@ import { Image, Plane, useAspect, useTexture } from "@react-three/drei";
 import { useLocation } from "react-router";
 import { observer } from "mobx-react";
 
-const initPlaneSize = [7, 4, 100, 100, 20];
+const initPlaneSize = [4, 3, 100, 100, 20];
 const AnimatedPlane = animated(Plane);
 
 const getCurrentIndex = ({ factor, pos, listLength }) => {
@@ -33,7 +33,7 @@ const getCurrentIndex = ({ factor, pos, listLength }) => {
 
 const VideoTile = observer(({ videoTexture, i, length, path }) => {
   const materialRef = useRef();
-  const factor = 5;
+  const factor = 3.5;
   const setY = (i) => factor * i;
 
   let pos = useMemo(() => 0, []);
@@ -42,9 +42,10 @@ const VideoTile = observer(({ videoTexture, i, length, path }) => {
   console.log("update", pos, speed, i);
   const bottomBound = (length - 1) * factor;
 
-  const { position, rotation, scale } = useSpring({
-    position: [0, setY(i), 0],
+  const { position, rotation, dist, scale } = useSpring({
+    position: [0, setY(i), 3],
     rotation: [0, 0, 0],
+    dist: 0,
     scale: 1,
   });
 
@@ -52,7 +53,7 @@ const VideoTile = observer(({ videoTexture, i, length, path }) => {
     const event = (e) => {
       // if (pos > setY(i) && e.deltaY > 0) return;
       // if (pos < setY(i) - bottomBound && e.deltaY < 0) return;
-      speed += e.deltaY * 0.003;
+      speed += e.deltaY * 0.002;
     };
 
     window.addEventListener("wheel", event);
@@ -76,22 +77,22 @@ const VideoTile = observer(({ videoTexture, i, length, path }) => {
       const currentIndexPosition = currentIndex * factor;
 
       const diff = currentIndexPosition - pos;
+      pos += diff * 0.1;
+      const relativePosition = pos + setY(i);
 
-      pos += diff * 0.05;
-      // Animate to position
-      // if (pos > 4) {
-      //   pos = 0;
+      let distance = Math.min(Math.abs(relativePosition), 1);
+      distance = 1 - distance ** 2;
+
+      dist.start(distance, { config: config.molasses });
+
+      position.start([2, relativePosition, 0]);
+      // scale.start(1 + 0.1 * distance);
+      // if (Math.abs(currentIndex) === i) {
+      //   scale.start(1.1);
+      // } else {
+      //   scale.start(1);
       // }
-      // if (pos < setY(i)) {
-      //   pos = 0;
-      // }
-      position.start([0, pos + setY(i), 0]);
-      if (Math.abs(currentIndex) === i) {
-        scale.start(1.5);
-      } else {
-        scale.start(1);
-      }
-      console.log(pos, currentIndex, i);
+      // console.log(pos, currentIndex, i);
     }
   });
 
@@ -99,6 +100,7 @@ const VideoTile = observer(({ videoTexture, i, length, path }) => {
     () => ({
       planeTexture: { type: "t", value: new VideoTexture(videoTexture) },
       time: { value: 0 },
+      dist: { value: 0 },
     }),
     []
   );
@@ -112,8 +114,11 @@ const VideoTile = observer(({ videoTexture, i, length, path }) => {
         args={initPlaneSize}
         scale={scale}
       >
-        <shaderMaterial
+        <a.shaderMaterial
           // wireframe={true}
+          uniforms-dist={dist.to((p) => ({
+            value: p,
+          }))}
           transparent={true}
           attach="material"
           vertexShader={vertex}
@@ -156,7 +161,7 @@ export const About = ({ path }) => {
   return (
     <animated.group
       visible={path === "/Projects"}
-      rotation={[-0.5, -0.5, 0]}
+      rotation={[-0.3, -0.4, -0.2]}
       ref={groupRef}
     >
       {Projects.map((data, i) => (

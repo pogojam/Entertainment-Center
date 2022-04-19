@@ -147,8 +147,7 @@ void main() {
     col = dif;
   }
 
-  col.xyz = pow(col.xyz, vec3(.9545)); // gamma correction
-
+  col.rgb = pow(col.rgb, vec3(.9545)); // gamma correction
   // col = texture(planeTexture, rd.xy) * col;
   // col = .03 * GetColor(2. * length(p));
 

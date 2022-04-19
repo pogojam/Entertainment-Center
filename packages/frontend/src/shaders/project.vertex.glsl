@@ -1,4 +1,5 @@
 uniform float time;
+uniform float dist;
 varying vec2 vUv;
 uniform sampler2D positionTexture;
 attribute vec2 reference;
@@ -11,13 +12,16 @@ void main() {
 
   vec3 pos = position;
 
-  pos.y += sin(time * .3) * .8;
+  pos.y += sin(time * 1.3) * .17;
   vUv.y -= sin(time * .3) * .05;
 
   // Bending
-  pos.y += sin(PI * vUv.x) * .1;
-  pos.z += sin(PI * vUv.x) * .4;
+  pos.y += sin(PI * vUv.x) * .05;
+  pos.z += sin(PI * vUv.x) * .2;
 
+  // Scaling
+  pos.xy *= 1. + .2 * dist;
+  vUv *= 1. + .2 * dist;
   // pos.y += 10.;
 
   vec4 modelViewPosition = modelViewMatrix * vec4(pos, 1.0);
