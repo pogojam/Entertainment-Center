@@ -37,9 +37,8 @@ float smin(float a, float b, float k) {
 }
 
 vec3 GetColor(float amount) {
-  vec3 col =
-      0.5 +
-      0.5 * cos(6.28319 * (vec3(0.8, 0.3, 0.02) + amount * vec3(1., 1., .0)));
+  vec3 col = 0.5 + 0.5 * cos(6.28319 * (vec3(0.8 * cos(intensity), 0.3, 0.02) +
+                                        amount * vec3(1., 1., .0)));
   return col * amount;
 }
 

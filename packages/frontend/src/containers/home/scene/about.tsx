@@ -14,26 +14,52 @@ import vertex from "../../../shaders/project.vertex.glsl?raw";
 import { sRGBEncoding, VideoTexture } from "three";
 import { Image, Plane, useAspect, useTexture } from "@react-three/drei";
 import { useLocation } from "react-router";
+import { observer } from "mobx-react";
 
 const initPlaneSize = [7, 4, 100, 100, 20];
 const AnimatedPlane = animated(Plane);
 
-const VideoTile = ({ videoTexture, i, poster }) => {
-  const materialRef = useRef();
+const getCurrentIndex = ({ factor, pos, listLength }) => {
+  const len = listLength - 1;
+  const index = Math.round(pos / factor);
+  if (index > 0) {
+    return 0;
+  }
+  if (index < len * -1) {
+    return len * -1;
+  }
+  return index;
+};
 
-  const { position } = useSpring({
-    position: [0, 0, 0],
+const VideoTile = observer(({ videoTexture, i, length, path }) => {
+  const materialRef = useRef();
+  const factor = 5;
+  const setY = (i) => factor * i;
+
+  let pos = useMemo(() => 0, []);
+  let speed = useMemo(() => 0, []);
+
+  console.log("update", pos, speed, i);
+  const bottomBound = (length - 1) * factor;
+
+  const { position, rotation, scale } = useSpring({
+    position: [0, setY(i), 0],
+    rotation: [0, 0, 0],
+    scale: 1,
   });
-  const setY = (i) => 5 * i;
 
   useEffect(() => {
-    let pos = setY(i);
-    window.addEventListener("wheel", (e) => {
-      pos += e.deltaY * 0.03;
-      position.start([0, pos, 0]);
-    });
-    position.start([0, pos, 0]);
-  }, []);
+    const event = (e) => {
+      // if (pos > setY(i) && e.deltaY > 0) return;
+      // if (pos < setY(i) - bottomBound && e.deltaY < 0) return;
+      speed += e.deltaY * 0.003;
+    };
+
+    window.addEventListener("wheel", event);
+    return () => {
+      window.removeEventListener("wheel", event);
+    };
+  }, [path]);
 
   useFrame((e) => {
     const mRef = materialRef.current;
@@ -41,6 +67,31 @@ const VideoTile = ({ videoTexture, i, poster }) => {
       materialRef.current.material.uniforms.time.value = e.clock.elapsedTime;
       materialRef.current.material.uniforms.planeTexture.value.needsUpdate =
         true;
+
+      // Scroll Interaction
+      speed *= 0.8;
+      pos += speed;
+
+      const currentIndex = getCurrentIndex({ factor, pos, listLength: length });
+      const currentIndexPosition = currentIndex * factor;
+
+      const diff = currentIndexPosition - pos;
+
+      pos += diff * 0.05;
+      // Animate to position
+      // if (pos > 4) {
+      //   pos = 0;
+      // }
+      // if (pos < setY(i)) {
+      //   pos = 0;
+      // }
+      position.start([0, pos + setY(i), 0]);
+      if (Math.abs(currentIndex) === i) {
+        scale.start(1.5);
+      } else {
+        scale.start(1);
+      }
+      console.log(pos, currentIndex, i);
     }
   });
 
@@ -54,7 +105,13 @@ const VideoTile = ({ videoTexture, i, poster }) => {
 
   return (
     <mesh key={i}>
-      <AnimatedPlane ref={materialRef} position={position} args={initPlaneSize}>
+      <AnimatedPlane
+        ref={materialRef}
+        rotation={rotation}
+        position={position}
+        args={initPlaneSize}
+        scale={scale}
+      >
         <shaderMaterial
           // wireframe={true}
           transparent={true}
@@ -66,7 +123,7 @@ const VideoTile = ({ videoTexture, i, poster }) => {
       </AnimatedPlane>
     </mesh>
   );
-};
+});
 
 export const About = ({ path }) => {
   const scale = useAspect("cover", 1920, 1080, 1);
@@ -97,11 +154,21 @@ export const About = ({ path }) => {
   });
 
   return (
-    <animated.group rotation={[-0.2, 0, 0]} ref={groupRef}>
-      {path === "/Projects" &&
-        Projects.map((data, i) => (
-          <VideoTile key={i} videoTexture={videos[i]} {...data} i={i} />
-        ))}
+    <animated.group
+      visible={path === "/Projects"}
+      rotation={[-0.5, -0.5, 0]}
+      ref={groupRef}
+    >
+      {Projects.map((data, i) => (
+        <VideoTile
+          path={path}
+          length={Projects.length}
+          key={i}
+          videoTexture={videos[i]}
+          {...data}
+          i={i}
+        />
+      ))}
     </animated.group>
   );
 };

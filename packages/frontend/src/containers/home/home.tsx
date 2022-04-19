@@ -1,4 +1,4 @@
-import { Scroll, Stars } from "@react-three/drei";
+import { Float, PresentationControls, Scroll, Stars } from "@react-three/drei";
 import { useEffect, useLayoutEffect } from "react";
 import { Outlet, Route, Routes, useLocation } from "react-router";
 import { useTransition, config } from "react-spring";
@@ -29,7 +29,13 @@ const HomeContainer = observer(() => {
   return (
     <StyledHomeContainer>
       <Background>
-        <Stars radius={100} depth={50} count={5000} factor={4} />
+        <Float
+          speed={0.2} // Animation speed, defaults to 1
+          rotationIntensity={20} // XYZ rotation intensity, defaults to 1
+          floatIntensity={1} // Up/down float intensity, defaults to 1
+        >
+          <Stars radius={100} depth={50} count={5000} factor={4} />
+        </Float>
         <WarpedPlane />
         <About path={location.pathname} />
       </Background>

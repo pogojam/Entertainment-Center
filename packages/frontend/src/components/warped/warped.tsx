@@ -43,11 +43,6 @@ const entranceSequence = async ({
       velocity: 0,
       tension: 2,
     },
-    onStart(elapsedTime) {
-      setTimeout(() => {
-        setUnlockMouse(true);
-      }, 1900);
-    },
   });
 
   await intensity.start(1.3, {
@@ -74,14 +69,13 @@ const useAnimState = ({ intensity, mSize, mouse, planeRef }) => {
 
   useEffect(() => {
     if (NavStore.path === "/Projects") {
-      entranceSequence({ intensity, mouse, setUnlockMouse, mSize });
-      setUnlockMouse(false);
-      // mouse.set([0, 0]);
+      // entranceSequence({ intensity, mouse, setUnlockMouse, mSize });
       // intensity.set(3.3);
       // mSize.set(3.2);
-      AnimStore.setMSize(3.2);
+      setUnlockMouse(false);
+      AnimStore.setMSize(4.2);
       AnimStore.setMouse([0, 0]);
-      AnimStore.setIntensity(3.3);
+      AnimStore.setIntensity(2.0);
     }
     if (NavStore.path === "/") {
       entranceSequence({ intensity, mouse, setUnlockMouse, mSize });
@@ -127,8 +121,15 @@ export const WarpedPlane = observer(() => {
     position: initPlanePosition,
     intensity: AnimStore.intensity,
     mouse: AnimStore.mouse,
-    config: config.molasses,
+    config: {
+      tension: 80,
+    },
   });
+
+  useEffect(() => {
+    mouse.start({ config: { tension: 100 } });
+    mSize.set({ config: config.gentle });
+  }, []);
 
   useAnimState({ mouse, mSize, intensity, planeRef });
 
