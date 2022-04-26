@@ -199,7 +199,9 @@ const VideoTile = observer(
       };
 
       window.addEventListener("wheel", event);
+      window.addEventListener("touchmove", event);
       return () => {
+        window.addEventListener("touchmove", event);
         window.removeEventListener("wheel", event);
       };
     }, [path]);
