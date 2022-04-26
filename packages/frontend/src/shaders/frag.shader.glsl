@@ -105,6 +105,8 @@ vec3 GetNormal(vec3 p) {
   return normalize(n);
 }
 
+
+
 vec4 GetLight(vec3 p) {
   // lightPos.xz += vec2(sin(time), cos(time)) * 2.;
   vec3 l = -normalize(p);
@@ -120,7 +122,10 @@ vec4 GetLight(vec3 p) {
     if (manualOrbColor.a == .0) {
       coloredLight = vec4(GetColor(dif), 1.);
     } else {
-      coloredLight = manualOrbColor;
+      // coloredLight = vec4(GetColor(dif), 1.);
+      // coloredLight = manualOrbColor / coloredLight ;
+      coloredLight = manualOrbColor  ;
+      coloredLight.rgb = coloredLight.rgb / ( dif *1.5 ) ;
     }
   } else {
     coloredLight = vec4(GetColor(dif) + .1, 1.);

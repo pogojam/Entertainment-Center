@@ -42,11 +42,28 @@ const getCurrentIndex = ({ factor, pos, listLength }) => {
 const StyledTileDescription = styled(Html)`
   font-family: "Roboto", sans-serif;
   position: relative;
-  width: 100vw;
+  width: 75vw;
   height: 100vh;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 750px) {
+    width: 100vw;
+  }
+
+  .Tile_Link_List {
+    display: flex;
+    gap: 15px;
+
+    a {
+      border: 1px solid;
+      padding: 4px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+  }
+
   .Project_Container {
-    position: absolute;
-    bottom: 0px;
     /* backdrop-filter: blur(22px); */
     /* background-color: #17141442; */
     padding: 1.2em;
@@ -58,6 +75,8 @@ const StyledTileDescription = styled(Html)`
   img {
     width: 75px;
     height: 75px;
+    position: absolute;
+    bottom: 32px;
   }
   h1 {
     font-weight: bold;
@@ -81,7 +100,15 @@ const StyledTileDescription = styled(Html)`
   } */
 `;
 
-const TileDescription = ({ contrast, logo, title, dist, description }) => {
+const TileDescription = ({
+  contrast,
+  link,
+  gitLink,
+  logo,
+  title,
+  dist,
+  description,
+}) => {
   // const [translation, setTranslation] = useState(0);
   // const ref = useRef();
 
@@ -123,6 +150,10 @@ const TileDescription = ({ contrast, logo, title, dist, description }) => {
         }}
       >
         <a.h1>{title}</a.h1>
+        <div className="Tile_Link_List">
+          {gitLink.length > 0 && <a href={gitLink}>Github</a>}
+          {link && <a href={link}>website</a>}
+        </div>
         <a.div className={"Description"}>{description}</a.div>
         <img src={logo} />
       </a.div>
@@ -139,6 +170,8 @@ const VideoTile = observer(
     i,
     length,
     path,
+    link,
+    gitLink,
     color,
     contrast,
     title,
@@ -232,15 +265,15 @@ const VideoTile = observer(
             args={initPlaneSize}
             scale={scale}
           >
-            {isVisible && (
-              <TileDescription
-                logo={logo}
-                description={description}
-                dist={dist}
-                title={title}
-                contrast={contrast}
-              />
-            )}
+            <TileDescription
+              gitLink={gitLink}
+              link={link}
+              logo={logo}
+              description={description}
+              dist={dist}
+              title={title}
+              contrast={contrast}
+            />
             <animated.shaderMaterial
               // wireframe={true}
               uniforms-dist={dist.to((p) => ({

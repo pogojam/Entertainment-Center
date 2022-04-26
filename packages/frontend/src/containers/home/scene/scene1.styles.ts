@@ -40,6 +40,7 @@ export const StyledSceneCaption = styled(animated.div) <ISceneCaption>`
     text-shadow: rgb(172 128 128) -1.08454px -0.67567px 14px;
     }
 
+
 `;
 
 export const StyledSceneHeading = styled(animated.div)`

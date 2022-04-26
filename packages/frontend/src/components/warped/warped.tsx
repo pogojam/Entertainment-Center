@@ -196,7 +196,7 @@ export const WarpedPlane = observer(() => {
           vertexShader={vertex}
           fragmentShader={frag}
           // depthTest={NavStore.path === "/Projects"}
-          depthTest={NavStore.path !== "/Projects"}
+          depthTest={false}
         />
         {/* <customMaterial attach="material" color={"white"} map={img} /> */}
       </AnimatedPlane>

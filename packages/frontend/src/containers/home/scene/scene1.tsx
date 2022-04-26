@@ -8,6 +8,12 @@ import { observer } from "mobx-react";
 import { useStore } from "../../../models";
 import { types } from "mobx-state-tree";
 import { NavBar } from "../../../components/nav";
+import { BsLinkedin, BsMedium } from "react-icons/bs";
+import {
+  AiFillMediumSquare,
+  AiFillLinkedin,
+  AiFillTwitterSquare,
+} from "react-icons/ai";
 
 export const Scene1 = observer(({ style }) => {
   const { opacity, header } = useSpring({

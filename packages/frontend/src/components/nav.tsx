@@ -1,4 +1,5 @@
 import { config } from "@react-spring/three";
+import { BsFillArrowDownCircleFill } from "react-icons/bs";
 import { Anchor, Button, Nav } from "grommet";
 import * as Icons from "grommet-icons";
 import { makeAutoObservable } from "mobx";
@@ -11,6 +12,12 @@ import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
 import { useStore } from "../models";
 import { BackgroundState } from "./background/background";
+import {
+  AiFillMediumSquare,
+  AiFillLinkedin,
+  AiFillTwitterSquare,
+  AiOutlineGithub,
+} from "react-icons/ai";
 
 export const NavModel = types
   .model({
@@ -44,15 +51,26 @@ const StyledNav = styled(animated.nav)`
   z-index: 99;
   display: flex;
   justify-content: center;
+  /* 
+  &::after {
+    content: "";
+
+    border-radius: 50%;
+    border: 1px solid white;
+    width: 100%;
+  } */
 
   .wrapper {
     width: 100%;
     display: flex;
+    align-items: center;
+    flex-direction: column;
     justify-content: center;
     border-top: 1px solid;
     /* border-bottom: 1px solid; */
     padding-top: 10px;
     padding-bottom: 10px;
+    gap: 17px;
 
     @media screen and (max-width: 700px) {
       width: 90%;
@@ -78,7 +96,6 @@ const StyledNav = styled(animated.nav)`
   .AboutLettering {
     display: flex;
     align-items: center;
-    border-right: 1px solid;
     padding-right: 1pc;
 
     h2 {
@@ -98,6 +115,20 @@ const AboutLettering = () => {
   );
 };
 
+const StyledLinkBar = styled.div`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 1.5em;
+  display: flex;
+  z-index: 999;
+  color: white;
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
 export const NavMain = observer(() => {
   const { NavStore } = useStore();
   const location = useLocation();
@@ -108,6 +139,20 @@ export const NavMain = observer(() => {
 
   return (
     <>
+      <StyledLinkBar>
+        <a href="https://www.linkedin.com/in/ryan-breaux-4603396a/">
+          <AiFillLinkedin />
+        </a>
+        <a href="https://medium.com/@aisfbcxk">
+          <AiFillMediumSquare />
+        </a>
+        <a href="https://github.com/pogojam">
+          <AiOutlineGithub />
+        </a>
+        {/* <a href="https://www.linkedin.com/in/ryan-breaux-4603396a/">
+          <AiFillTwitterSquare />
+        </a> */}
+      </StyledLinkBar>
       <Outlet />
     </>
   );
@@ -146,10 +191,16 @@ export const NavBar = observer(() => {
 
   return (
     <Fragment>
-      <StyledNav style={{ opacity, color: borderColor }}>
+      <StyledNav
+        onClick={() => navigate("/Projects")}
+        style={{ opacity, color: borderColor }}
+      >
         <animated.div style={{ width, opacity }} className="wrapper">
           <AboutLettering />
-          <Button onClick={() => navigate("/Projects")} label="Projects" />
+          <button>
+            <BsFillArrowDownCircleFill onClick={() => navigate("/Projects")} />
+          </button>
+          {/* <Button onClick={() => navigate("/Projects")} label="Projects" /> */}
           {/* <Button onClick={() => navigate("/About")} label="About" /> */}
         </animated.div>
       </StyledNav>
