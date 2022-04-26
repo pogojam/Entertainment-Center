@@ -75,18 +75,24 @@ const StyledNav = styled(animated.nav)`
     transform: scale(1.1);
   }
 
-  // About Lettering
+  .AboutLettering {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid;
+    padding-right: 1pc;
 
-  h2 {
-    font-size: 1rem;
-    text-shadow: 0px 4px 9px black;
-    letter-spacing: 1px;
+    h2 {
+      font-size: 1rem;
+      text-shadow: 0px 4px 9px black;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
   }
 `;
 
 const AboutLettering = () => {
   return (
-    <div>
+    <div className="AboutLettering">
       <h2>human,software engineer,entrepreneur</h2>
     </div>
   );
@@ -143,8 +149,8 @@ export const NavBar = observer(() => {
       <StyledNav style={{ opacity, color: borderColor }}>
         <animated.div style={{ width, opacity }} className="wrapper">
           <AboutLettering />
-          {/* <Button onClick={() => navigate("/Projects")} label="Projects" />
-          <Button onClick={() => navigate("/About")} label="About" /> */}
+          <Button onClick={() => navigate("/Projects")} label="Projects" />
+          {/* <Button onClick={() => navigate("/About")} label="About" /> */}
         </animated.div>
       </StyledNav>
     </Fragment>

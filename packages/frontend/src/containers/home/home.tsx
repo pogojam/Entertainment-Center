@@ -7,6 +7,7 @@ import { Background } from "../../components/background/background";
 import { PageManager } from "../../components/page/page";
 import { WarpedPlane } from "../../components/warped/warped";
 import "./home.css";
+import { About } from "./scene/about";
 import { Scene1 } from "./scene/scene1";
 
 const StyledHomeContainer = styled.div`
@@ -33,7 +34,7 @@ const HomeContainer = observer(() => {
           <Stars radius={100} depth={50} count={5000} factor={4} />
         </Float>
         <WarpedPlane />
-        {/* <About path={location.pathname} /> */}
+        <About path={location.pathname} />
       </Background>
       <PageManager>
         {transitions((props, items) => (

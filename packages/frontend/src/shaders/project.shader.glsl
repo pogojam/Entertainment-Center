@@ -13,5 +13,5 @@ void main() {
 
   // gl_FragColor = vec4(col);
   gl_FragColor = mix(bw_mix, col, dist);
-  gl_FragColor.a = clamp(dist, .6, 1.);
+  gl_FragColor.a = clamp(dist, .2, 1.);
 }
